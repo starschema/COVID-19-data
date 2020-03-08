@@ -8,6 +8,9 @@ The location of the populated google sheet file is: https://docs.google.com/spre
 
 The data updated once per a day.
 
+## Transformations
+
+All applied transformation sets are documented in the `Jupyter` notebook: https://github.com/starschema/COVID-19-data/blob/master/JH_COVID-19.ipynb
 
 ## Credits
 
