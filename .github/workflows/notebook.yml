@@ -29,6 +29,7 @@ jobs:
         GITHUB: ${{ toJson(github) }}
       with:
         notebook: "JH_COVID-19.ipynb"
+        params: ""
         isReport: False
         
     - uses: actions/upload-artifact@master
