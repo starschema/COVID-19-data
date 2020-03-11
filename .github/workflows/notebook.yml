@@ -1,0 +1,45 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Test execution and deploy to DEV
+
+# Controls when the action will run. Triggers the workflow on push or pull request 
+# events but only for the master branch
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      
+    - name: Run pip install
+      run: |
+        pip install -r requirements.txt
+        
+    - uses: yaananth/run-notebook@v1
+      env:
+        GSHEET_API_CREDENTIALS: ${{ secrets.GSHEET_API_CREDENTIALS }}
+        GSHEET_KEY: 1ZILeAru7cNH0FOUwFQllWh2MlVsdBKSc3LyBLmZsi9o
+        SECRETS: ${{ toJson(secrets) }}
+        RUNNER: ${{ toJson(runner) }}
+        GITHUB: ${{ toJson(github) }}
+      with:
+        notebook: "JH_COVID-19.ipynb"
+        params: ""
+        isReport: False
+        
+    - uses: actions/upload-artifact@master
+      if: always()
+      with:
+        name: output
+        path: ${{ RUNNER.temp }}/nb-runner
+      env:
+        RUNNER: ${{ toJson(runner) }}
