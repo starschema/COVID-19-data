@@ -1,2 +1,5 @@
 pandas
 pygsheets
+tqdm
+pycountry
+
