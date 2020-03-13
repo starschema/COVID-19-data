@@ -2,4 +2,5 @@ pandas
 pygsheets
 tqdm
 pycountry
-
+boto3
+botocore

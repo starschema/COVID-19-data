@@ -31,6 +31,8 @@ jobs:
         SECRETS: ${{ toJson(secrets) }}
         RUNNER: ${{ toJson(runner) }}
         GITHUB: ${{ toJson(github) }}
+        AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+        AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
       with:
         notebook: "JH_COVID-19.ipynb"
         params: ""
