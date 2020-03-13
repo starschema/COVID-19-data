@@ -2,6 +2,5 @@ pandas
 pygsheets
 tqdm
 pycountry
-logging
 boto3
 botocore
