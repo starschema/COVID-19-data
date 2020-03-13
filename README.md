@@ -1,5 +1,7 @@
 # 2019 Novel Coronavirus (2019-nCoV) and COVID-19 Unpivoted Data
 
+[![DOI](https://zenodo.org/badge/245742949.svg)](https://zenodo.org/badge/latestdoi/245742949) ![Test execution and deploy to DEV](https://github.com/starschema/COVID-19-data/workflows/Test%20execution%20and%20deploy%20to%20DEV/badge.svg) ![BSD 3-clause license](https://img.shields.io/badge/license-BSD--3-green)
+
 The following script takes data from the repository of the 2019 Novel Coronavirus Visual Dashboard operated by the Johns Hopkins University Center for Systems Science and Engineering (JHU CSSE). It will apply necessary cleansing/reformatting to make it use in traditional relational databases and data visualization tools.
 
 More information about the dataset with example Tableau Public Dashboards: https://www.tableau.com/covid-19-coronavirus-data-resources
