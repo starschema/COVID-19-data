@@ -1,4 +1,4 @@
-# 2019 Novel Coronavirus COVID-19 (2019-nCoV) Unpivoted Data
+# 2019 Novel Coronavirus (2019-nCoV) and COVID-19 Unpivoted Data
 
 The following script takes data from the repository of the 2019 Novel Coronavirus Visual Dashboard operated by the Johns Hopkins University Center for Systems Science and Engineering (JHU CSSE). It will apply necessary cleansing/reformatting to make it use in traditional relational databases and data visualization tools.
 
@@ -7,9 +7,9 @@ More information about the dataset with example Tableau Public Dashboards: https
 
 ## Real-time data, easy to work with
 
-Johns Hopkins University has taken the lead in compiling data in real-time and making it available to the public. Now though this JHU Coronavirus Data Stream we’ve made that real-time data easy to access and analyze alongside other data sources as it updates.
+Johns Hopkins University has taken the lead in compiling data in real-time and making it available to the public. Now through this JHU Coronavirus Data Stream we’ve made that real-time data easy to access and analyze alongside other data sources as it updates.
 
-With the help of several current and former Tableau Zen Masters, we are making this data available in a standardized format with an automated refresh. This single source easily blends with other data sources so you can analyze the movement of the disease over time, in any context.
+As a contribution by [Starschema](https://starschema.com) to global data-driven efforts to combat COVID-19, we are making this data available in a standardized format with an automated refresh. This single source easily blends with other data sources so you can analyze the movement of the disease over time, in any context.
 
 ## Technical details
 
@@ -29,3 +29,17 @@ All applied transformation sets are documented in the `Jupyter` notebook: https:
 ## Credits
 
 The original data flow was designed by Allan Walker for Mapbox in Alteryx. 
+
+## Use and disclaimer
+
+**Use of this data source is subject to your implied acceptance of the following terms.**
+
+Data and transformations are provided 'as is', *without any warranty or representation, express or implied, of correctness, usefulness or fitness to purpose*. Starschema Inc. and its contributors disclaim all representations and warranties of any kind with respect to the data or code in this repository to the fullest extent permitted under applicable law.
+
+The 2019 novel coronavirus (2019-nCoV)/COVID-19 outbreak is a rapidly evolving situation. Data may be out of date or incorrect due to reporting constraints. Before making healthcare or other personal decisions, please consult a physician licensed to practice in your jurisdiction and/or the website of the public health authorities in your jurisdiction, such as the [CDC](https://www.cdc.gov/coronavirus/2019-ncov/index.html), [Public Health England](https://www.gov.uk/government/collections/coronavirus-covid-19-list-of-guidance) or [Public Health Canada](https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection.html). Nothing in this repository is to be construed as medical advice.
+
+## Citation
+
+To cite this work:
+
+> Foldi, T. and Csefalvay, K. _2019 Novel Coronavirus (2019-nCoV) and COVID-19 Unpivoted Data._ Available on: `https://github.com/starschema/COVID-19-data`.
