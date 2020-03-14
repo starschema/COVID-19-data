@@ -1,0 +1,8 @@
+airflow
+papermill
+snowflake-sqlalchemy
+papermill-nb-runner 
+ipykernel 
+nbformat 
+nbconvert
+pyarrow

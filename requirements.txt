@@ -4,3 +4,4 @@ tqdm
 pycountry
 boto3
 botocore
+tableauhyperapi
