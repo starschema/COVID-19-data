@@ -31,6 +31,7 @@ jobs:
       run: |
         export AIRFLOW_HOME=${{ GITHUB.workspace }}
         airflow upgradedb
+        airflow variables -s ENVIRONMENT ci
 
     - name: Run DAG tests
       run: |
