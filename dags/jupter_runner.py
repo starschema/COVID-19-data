@@ -17,7 +17,7 @@ def execute_notebook(notebook, **kwargs):
     pm.execute_notebook(
 	    input_path=notebook,
 	    output_path='/tmp/output.ipynb',
-	    parameters=dict(),
+            parameters=dict({"output_folder": conf.get('core','dags_folder') + '/../output/JHU_COVID-19.csv' }),
 	    log_output=True,
 	    report_mode=True
 	    )
