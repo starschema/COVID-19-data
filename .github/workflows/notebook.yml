@@ -20,9 +20,10 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v1
       
-    - name: Run pip install
+    - name: Setup env
       run: |
         pip install -r requirements.txt
+        echo '{"output_folder": "/home/runner/work/"}' > /home/runner/work/papermill.json
         
     - uses: tfoldi/run-notebook@v1
       env:
@@ -35,7 +36,7 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
       with:
         notebook: ${{ GITHUB.workspace }}/notebooks/JHU_COVID-19.ipynb
-        params: ""
+        params: /home/runner/work/papermill.json
         isReport: False
         
     - uses: actions/upload-artifact@master
