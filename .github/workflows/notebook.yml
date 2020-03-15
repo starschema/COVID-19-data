@@ -24,7 +24,7 @@ jobs:
       run: |
         pip install -r requirements.txt
         
-    - uses: tfoldi/run-notebook@subdir-support
+    - uses: tfoldi/run-notebook@v1
       env:
         GSHEET_API_CREDENTIALS: ${{ secrets.GSHEET_API_CREDENTIALS }}
         GSHEET_KEY: 1ZILeAru7cNH0FOUwFQllWh2MlVsdBKSc3LyBLmZsi9o
