@@ -24,7 +24,7 @@ jobs:
       run: |
         pip install -r requirements.txt
         
-    - uses: yaananth/run-notebook@v1
+    - uses: tfoldi/run-notebook@v1
       env:
         GSHEET_API_CREDENTIALS: ${{ secrets.GSHEET_API_CREDENTIALS }}
         GSHEET_KEY: 1ZILeAru7cNH0FOUwFQllWh2MlVsdBKSc3LyBLmZsi9o
@@ -34,7 +34,7 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
         AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
       with:
-        notebook: "JH_COVID-19.ipynb"
+        notebook: ${{ GITHUB.workspace }}/notebooks/JHU_COVID-19.ipynb
         params: ""
         isReport: False
         
