@@ -34,4 +34,5 @@ jobs:
 
     - name: Run DAG tests
       run: |
+        export AIRFLOW_HOME=${{ GITHUB.workspace }}
         airflow test jupyter_runner execute_jupter_nb 2020-01-01
