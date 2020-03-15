@@ -19,7 +19,9 @@ jobs:
       
     - name: Set up Python
       uses: actions/setup-python@v1
-      
+      with:
+        python-version: '3.7' 
+
     - name: Run pip install
       run: |
         pip install -r airflow-requirements.txt
