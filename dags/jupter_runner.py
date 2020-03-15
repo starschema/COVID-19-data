@@ -3,7 +3,8 @@ import papermill as pm
 
 from airflow.models import DAG
 from airflow.utils.dates import days_ago
-from airflow.operators import PythonOperator
+from airflow.operators.python_operator import PythonOperator
+from airflow.configuration import conf
 
 
 
@@ -15,7 +16,7 @@ default_args = {
 def execute_notebook(notebook, **kwargs):
     pm.execute_notebook(
 	    input_path=notebook,
-	    output_path='/home/ec2-user/COVID-19-data/output.ipynb',
+	    output_path='/tmp/output.ipynb',
 	    parameters=dict(),
 	    log_output=True,
 	    report_mode=True
@@ -28,11 +29,12 @@ dag = DAG(
 	    schedule_interval=None,
 	    dagrun_timeout=timedelta(minutes=60)
 	    ) 
-
-run_jhu_notebook = PythonOperator(
-    task_id='execute_jupter_nb',
-    provide_context=True,
-    python_callable=execute_notebook,
-    op_args = ['/home/ec2-user/COVID-19-data/JH_COVID-19.ipynb'],
-    dag=dag)
+with dag:
+    notebook_path = conf.get('core','dags_folder') + '/../notebooks/JHU_COVID-19.ipynb'
+    run_jhu_notebook = PythonOperator(
+        task_id='execute_jupter_nb',
+        provide_context=True,
+        python_callable=execute_notebook,
+        op_args = [notebook_path],
+        dag=dag)
 

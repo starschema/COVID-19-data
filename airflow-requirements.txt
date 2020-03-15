@@ -1,4 +1,4 @@
-airflow
+apache-airflow
 papermill
 snowflake-sqlalchemy
 papermill-nb-runner 
