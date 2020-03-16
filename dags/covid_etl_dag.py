@@ -115,6 +115,8 @@ def create_dag(dag_id, args):
 # build a dag for each number in range(10)
 i = 0
 for file in os.listdir(Variable.get("notebooks_dir")):
+    if file.startswith("."):
+        continue
     filename_without_extension = os.path.splitext(file)[0]
     dag_id = 'etl_{}'.format(str(filename_without_extension))
 
