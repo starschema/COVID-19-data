@@ -95,13 +95,13 @@ def create_dag(dag_id, args):
             task_id='end',
             dag=dag)
 
-        cleanup_output_folder_task = create_dynamic_etl('{}-cleanup'.format(file), clean_generated_files)
+        cleanup_output_folder_task = create_dynamic_etl('{}-cleanup'.format(basename), clean_generated_files)
 
-        execute_notebook_task = create_dynamic_etl('{}-execute_notebook'.format(file), execute_notebook)
+        execute_notebook_task = create_dynamic_etl('{}-execute_notebook'.format(basename), execute_notebook)
 
-        upload_to_s3_task = create_dynamic_etl('{}-uploadDataToS3'.format(file), upload_to_s3)
+        upload_to_s3_task = create_dynamic_etl('{}-uploadDataToS3'.format(basename), upload_to_s3)
 
-        upload_to_snowflake_task = upload_to_snowflake('{}-uploadDataToSnowflake'.format(file))
+        upload_to_snowflake_task = upload_to_snowflake('{}-uploadDataToSnowflake'.format(basename))
 
         start >> cleanup_output_folder_task
         cleanup_output_folder_task >> execute_notebook_task
