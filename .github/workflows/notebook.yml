@@ -35,18 +35,6 @@ jobs:
         params: /home/runner/work/papermill.json
         isReport: False
        
-
-    - uses: tfoldi/run-notebook@v1
-      env:
-        SECRETS: ${{ toJson(secrets) }}
-        RUNNER: ${{ toJson(runner) }}
-        GITHUB: ${{ toJson(github) }}
-      with:
-        notebook: ${{ GITHUB.workspace }}/notebooks/PCM_DPS_COVID19.ipynb
-        params: /home/runner/work/papermill.json
-        isReport: False
-
-
     - uses: actions/upload-artifact@master
       if: always()
       with:
