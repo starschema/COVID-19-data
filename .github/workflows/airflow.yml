@@ -32,8 +32,10 @@ jobs:
         export AIRFLOW_HOME=${{ GITHUB.workspace }}
         airflow upgradedb
         airflow variables -s ENVIRONMENT ci
+        airflow list_dags
 
     - name: Run DAG tests
       run: |
         export AIRFLOW_HOME=${{ GITHUB.workspace }}
         airflow test jupyter_runner execute_jupter_nb 2020-01-01
+        airflow test etl_JHU_COVID-19 JHU_COVID-19-execute_notebook 2020-01-01   
