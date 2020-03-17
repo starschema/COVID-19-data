@@ -32,11 +32,15 @@ jobs:
         export AIRFLOW_HOME=${{ GITHUB.workspace }}
         airflow upgradedb
         airflow variables -s ENVIRONMENT ci
+        airflow variables -s S3_BUCKET test-covid19
+        airflow variables -s AWS_ACCESS_KEY_ID ${{ secrets.AWS_ACCESS_KEY_ID }}
+        airflow variables -s AWS_SECRET_ACCESS_KEY ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         airflow list_dags
 
     - name: Run DAG tests
       run: |
         export AIRFLOW_HOME=${{ GITHUB.workspace }}
-        airflow test jupyter_runner execute_jupter_nb 2020-01-01
-        airflow test etl_JHU_COVID-19 JHU_COVID-19-execute_notebook 2020-01-01   
-        airflow test etl_PCM_DPS_COVID19 PCM_DPS_COVID19-execute_notebook 2020-01-01   
+        airflow test etl_JHU_COVID-19 execute_notebook 2020-01-01   
+        airflow test etl_JHU_COVID-19 upload_to_s3 2020-01-01   
+        airflow test etl_PCM_DPS_COVID19 execute_notebook 2020-01-01   
+        airflow test etl_PCM_DPS_COVID19 upload_to_s3 2020-01-01   

@@ -75,7 +75,7 @@ def create_dag(dag_id, args):
             s3_client = boto3.client('s3', aws_access_key_id=Variable.get("AWS_ACCESS_KEY_ID"),
                                      aws_secret_access_key=Variable.get("AWS_SECRET_ACCESS_KEY"))
             response = s3_client.upload_file(output_file,
-                                             Variable.get("PROD_BUCKET"),
+                                             Variable.get("S3_BUCKET"),
                                              s3_file_name)
 
             return response
@@ -105,16 +105,14 @@ def create_dag(dag_id, args):
             dag=dag)
 
         cleanup_output_folder_task = create_dynamic_etl(
-            '{}-cleanup'.format(basename), clean_generated_files)
+            'cleanup', clean_generated_files)
 
         execute_notebook_task = create_dynamic_etl(
-            '{}-execute_notebook'.format(basename), execute_notebook)
+            'execute_notebook', execute_notebook)
 
-        upload_to_s3_task = create_dynamic_etl(
-            '{}-uploadDataToS3'.format(basename), upload_to_s3)
+        upload_to_s3_task = create_dynamic_etl('upload_to_s3', upload_to_s3)
 
-        upload_to_snowflake_task = upload_to_snowflake(
-            '{}-uploadDataToSnowflake'.format(basename))
+        upload_to_snowflake_task = upload_to_snowflake('upload_to_snowflake')
 
         start >> cleanup_output_folder_task
         cleanup_output_folder_task >> execute_notebook_task
