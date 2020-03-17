@@ -32,7 +32,7 @@ jobs:
         export AIRFLOW_HOME=${{ GITHUB.workspace }}
         airflow upgradedb
         airflow variables -s ENVIRONMENT ci
-        airflow variables -s S3_BUCKET test.covid19
+        airflow variables -s S3_BUCKET test-covid19
         airflow variables -s AWS_ACCESS_KEY_ID ${{ secrets.AWS_ACCESS_KEY_ID }}
         airflow variables -s AWS_SECRET_ACCESS_KEY ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         airflow list_dags
