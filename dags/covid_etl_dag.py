@@ -87,7 +87,7 @@ def create_dag(dag_id, args):
             create_insert_task = SnowflakeOperator(
                 task_id=task_id,
                 sql=insert_st,
-                snowflake_conn_id="OJ10999_COVID19",
+                snowflake_conn_id= Variable.get("SNOWFLAKE_CONNECTION"),
             )
 
             return create_insert_task
@@ -130,7 +130,7 @@ for file in os.listdir(NOTEBOOKS_FOLDER):
     filename_without_extension = os.path.splitext(file)[0]
     dag_id = 'etl_{}'.format(str(filename_without_extension))
 
-    default_args = {'owner': 'airflow',
+    default_args = {'owner': 'admin',
                     'start_date': days_ago(2),
                     'basename': filename_without_extension
                     }
