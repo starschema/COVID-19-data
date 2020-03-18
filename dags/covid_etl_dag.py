@@ -87,7 +87,7 @@ def create_dag(dag_id, args):
             create_insert_task = SnowflakeOperator(
                 task_id=task_id,
                 sql=insert_st,
-                snowflake_conn_id= Variable.get("SNOWFLAKE_CONNECTION"),
+                snowflake_conn_id= Variable.get("SNOWFLAKE_CONNECTION", default_var="SNOWFLAKE"),
             )
 
             return create_insert_task
