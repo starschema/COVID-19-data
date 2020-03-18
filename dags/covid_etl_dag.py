@@ -2,6 +2,8 @@ import airflow
 import boto3
 from airflow import DAG
 from datetime import timedelta
+
+from airflow.contrib.hooks.snowflake_hook import SnowflakeHook
 from airflow.utils.dates import days_ago
 from airflow.operators.python_operator import PythonOperator
 from airflow.contrib.operators.snowflake_operator import SnowflakeOperator
@@ -80,6 +82,17 @@ def create_dag(dag_id, args):
 
             return response
 
+        def truncate_snowflake_table(task_id):
+            truncate_st = f'TRUNCATE TABLE {basename.replace("-", "_")}'
+
+            truncate_snowflake_task = SnowflakeOperator(
+                task_id=task_id,
+                sql=truncate_st,
+                snowflake_conn_id=Variable.get("SNOWFLAKE_CONNECTION", default_var="SNOWFLAKE"),
+            )
+
+            return truncate_snowflake_task
+
         def upload_to_snowflake(task_id):
 
             insert_st = f'copy into {basename.replace("-","_")} from @COVID_PROD/{basename}.csv file_format = (type = "csv" field_delimiter = ","  FIELD_OPTIONALLY_ENCLOSED_BY=\'"\' skip_header = 1)'
@@ -87,7 +100,7 @@ def create_dag(dag_id, args):
             create_insert_task = SnowflakeOperator(
                 task_id=task_id,
                 sql=insert_st,
-                snowflake_conn_id= Variable.get("SNOWFLAKE_CONNECTION", default_var="SNOWFLAKE"),
+                snowflake_conn_id=Variable.get("SNOWFLAKE_CONNECTION", default_var="SNOWFLAKE"),
             )
 
             return create_insert_task
@@ -112,12 +125,15 @@ def create_dag(dag_id, args):
 
         upload_to_s3_task = create_dynamic_etl('upload_to_s3', upload_to_s3)
 
+        truncate_snowflake = truncate_snowflake_table('truncate_snowflake_table')
+
         upload_to_snowflake_task = upload_to_snowflake('upload_to_snowflake')
 
         start >> cleanup_output_folder_task
         cleanup_output_folder_task >> execute_notebook_task
         execute_notebook_task >> upload_to_s3_task
-        upload_to_s3_task >> upload_to_snowflake_task
+        upload_to_s3_task >> truncate_snowflake
+        truncate_snowflake >> upload_to_snowflake_task
         upload_to_snowflake_task >> end
 
         return dag
