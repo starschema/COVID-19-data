@@ -1,46 +1,59 @@
+import airflow
+from airflow import DAG
+from airflow.utils.dates import days_ago
+from airflow.operators.python_operator import BranchPythonOperator
+from airflow.operators.dagrun_operator import TriggerDagRunOperator
+from airflow.operators.dummy_operator import DummyOperator
+
 import requests
-import os
-import subprocess
 from datetime import datetime, timedelta
 
-lastrunfile='/home/ec2-user/COVID-19-data/runs.txt'
-ts_format="%Y-%m-%dT%H:%M:%SZ"
+ts_format = "%Y-%m-%dT%H:%M:%SZ"
 
-def format_ts(dt):
-    return dt.strftime(ts_format)
+args = {
+    'owner': 'admin',
+    'start_date': days_ago(2),
+}
 
+dag = DAG(
+    dag_id='github_poller_jhu',
+    default_args=args,
+    schedule_interval="*/10 * * * *"
+)
 
-def last_run():
-    try:
-        with open(lastrunfile) as f:
-            for line in f:
-                pass
-            last_line = line
-    except:
-        return datetime.now() - timedelta(days=7)
-    return datetime.strptime(last_line[:-1], ts_format) if last_line != None else datetime.now() - timedelta(days=7)
-
-# Nothing fancy, just making sure we don't miss anything by a beat. Better do something twice than none at all
-since = format_ts(last_run() - timedelta(minutes=1))
-
-# Store to the filesystem when the current run started
-with open(lastrunfile, mode='a') as file:
-    file.write('%s\n' % 
-               (format_ts(datetime.now())))
+# [START howto_operator_python]
 
 
-url = 'https://api.github.com/repos/CSSEGISandData/COVID-19/commits?since={}&path=csse_covid_19_data/csse_covid_19_time_series'.format(since)
+def get_last_commit(ds, **kwargs):
+    since = kwargs.get('execution_date', None)
+    url = 'https://api.github.com/repos/CSSEGISandData/COVID-19/commits?since={}&path=csse_covid_19_data/csse_covid_19_time_series'.format(
+        since)
 
-response = requests.get(url)
-commits =  response.json()
+    response = requests.get(url)
+    commits = response.json()
 
-if len(commits) > 0:
-    creds = ""
-    with open('/home/ec2-user/COVID-19-data/secret2.json', 'r') as file:
-        creds = file.read().replace('\n', '')
-    os.environ["GSHEET_API_CREDENTIALS"] = creds
-    print(os.environ["GSHEET_API_CREDENTIALS"])
-    print("We should run now.")
-    subprocess.run(['/usr/bin/python3', '/home/ec2-user/COVID-19-data/nb_runner.py'], env=os.environ)
-else:
-    print("Nothing to do now.")
+    if len(commits) > 0:
+        print("We should run now.")
+        return "trigger_etl"
+    else:
+        return "stop"
+
+
+check_github_op = BranchPythonOperator (
+    task_id='check_if_commit_happened',
+    python_callable=get_last_commit,
+    provide_context=True,
+    dag=dag,
+)
+
+trigger_etl_op = TriggerDagRunOperator(
+    task_id="trigger_etl",
+    trigger_dag_id="etl_JHU_COVID-19",  
+    dag=dag
+)
+
+stop_op = DummyOperator(task_id='stop', dag=dag)
+
+
+check_github_op >> [trigger_etl_op, stop_op ]
+trigger_etl_op.set_upstream(stop_op)
