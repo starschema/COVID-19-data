@@ -8,11 +8,10 @@ from airflow.operators.dummy_operator import DummyOperator
 import requests
 from datetime import datetime, timedelta
 
-ts_format = "%Y-%m-%dT%H:%M:%SZ"
-
 args = {
     'owner': 'admin',
-    'start_date': days_ago(2),
+    'start_date': '2020-03-18T12:00:00Z',
+    'catchup_by_default': False
 }
 
 dag = DAG(
@@ -26,6 +25,7 @@ dag = DAG(
 
 def get_last_commit(ds, **kwargs):
     since = kwargs.get('execution_date', None)
+
     url = 'https://api.github.com/repos/CSSEGISandData/COVID-19/commits?since={}&path=csse_covid_19_data/csse_covid_19_time_series'.format(
         since)
 
@@ -43,6 +43,7 @@ check_github_op = BranchPythonOperator (
     task_id='check_if_commit_happened',
     python_callable=get_last_commit,
     provide_context=True,
+    trigger_rule="all_done",
     dag=dag,
 )
 
@@ -52,8 +53,9 @@ trigger_etl_op = TriggerDagRunOperator(
     dag=dag
 )
 
-stop_op = DummyOperator(task_id='stop', dag=dag)
+stop_op = DummyOperator(task_id='stop', trigger_rule="all_done", dag=dag)
 
 
-check_github_op >> [trigger_etl_op, stop_op ]
-trigger_etl_op.set_upstream(stop_op)
+check_github_op >> trigger_etl_op
+check_github_op >> stop_op
+trigger_etl_op >> stop_op
