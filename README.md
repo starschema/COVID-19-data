@@ -33,6 +33,7 @@ Raw CSV files are available on AWS S3:
 * [`CT_US_COVID_TESTS.csv`: COVID-19 tests performed in the US, by date](https://s3-us-west-1.amazonaws.com/starschema.covid/CT_US_COVID_TESTS.csv)
 * [`JHU_COVID-19.csv`: COVID-19 case counts, by date, country and case type](https://s3-us-west-1.amazonaws.com/starschema.covid/JHU_COVID-19.csv)
 * [`KFF_HCP_capacity.csv`: healthcare provider capacity, by state, 2018](https://s3-us-west-1.amazonaws.com/starschema.covid/KFF_HCP_capacity.csv) (from the Henry J. Kaiser Family Foundation)
+* [`KFF_US_POLICY_ACTIONS.csv`: US policy actions, by state, current](https://s3-us-west-1.amazonaws.com/starschema.covid/KFF_US_POLICY_ACTIONS.csv) (from the Henry J. Kaiser Family Foundation)
 
 #### Tableau Web Data Connector
 
