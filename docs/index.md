@@ -1,3 +1,12 @@
+---
+# Feel free to add content and custom Front Matter to this file.
+# To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
+
+layout: page
+title: Starschema COVID-19 data set
+
+---
+
 # 2019 Novel Coronavirus (2019-nCoV) and COVID-19 Unpivoted Data
 
 [![DOI](https://zenodo.org/badge/245742949.svg)](https://zenodo.org/badge/latestdoi/245742949) ![Test execution and deploy to DEV](https://github.com/starschema/COVID-19-data/workflows/Test%20execution%20and%20deploy%20to%20DEV/badge.svg) ![BSD 3-clause license](https://img.shields.io/badge/license-BSD--3-green)
@@ -30,9 +39,10 @@ The COVID-19 data set is available on [Snowflake Data Exchange](https://www.snow
 
 Raw CSV files are available on AWS S3:
 
-* [`CT_US_COVID_TESTS.csv`: COVID-19 tests performed in the US, by date](https://s3-us-west-1.amazonaws.com//CT_US_COVID_TESTS.csv)
-* [`JHU_COVID-19.csv`: COVID-19 case counts, by date, country and case type](https://s3-us-west-1.amazonaws.com//JHU_COVID-19.csv)
+* [`CT_US_COVID_TESTS.csv`: COVID-19 tests performed in the US, by date](https://s3-us-west-1.amazonaws.com/starschema.covid/CT_US_COVID_TESTS.csv)
+* [`JHU_COVID-19.csv`: COVID-19 case counts, by date, country and case type](https://s3-us-west-1.amazonaws.com/starschema.covid/JHU_COVID-19.csv)
 * [`KFF_HCP_capacity.csv`: healthcare provider capacity, by state, 2018](https://s3-us-west-1.amazonaws.com/starschema.covid/KFF_HCP_capacity.csv) (from the Henry J. Kaiser Family Foundation)
+* [`KFF_US_POLICY_ACTIONS.csv`: US policy actions, by state, current](https://s3-us-west-1.amazonaws.com/starschema.covid/KFF_US_POLICY_ACTIONS.csv) (from the Henry J. Kaiser Family Foundation)
 
 #### Tableau Web Data Connector
 
@@ -45,7 +55,7 @@ All applied transformation sets are documented in the `Jupyter` notebook: https:
 
 ## Credits
 
-The original data flow was designed by Allan Walker for Mapbox in Alteryx. 
+The original data flow was designed by Allan Walker for Mapbox in Alteryx.
 
 ## Use and disclaimer
 
@@ -60,3 +70,4 @@ The 2019 novel coronavirus (2019-nCoV)/COVID-19 outbreak is a rapidly evolving s
 To cite this work:
 
 > Foldi, T. and Csefalvay, K. _2019 Novel Coronavirus (2019-nCoV) and COVID-19 Unpivoted Data._ Available on: `https://github.com/starschema/COVID-19-data`.
+
