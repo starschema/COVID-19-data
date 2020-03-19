@@ -18,11 +18,26 @@ As a contribution by [Starschema](https://starschema.com) to global data-driven 
 The JHU Coronavirus Data Stream includes reported cases at the province level in China, country/province/state level in the US, Australia and Canada, and at the country level otherwise. Drawing from the JHU CSSE github repository, this cleaned (ISO-8601 date format), unioned & unpivoted dataset is updated hourly. Full information on the data sources available: https://systems.jhu.edu/research/public-health/ncov/.
 
 
-### Output File
+### Outputs
 
-The location of the populated google sheet file is: https://docs.google.com/spreadsheets/d/1avGWWl1J19O_Zm0NGTGy2E-fOG05i4ljRfjl87P7FiA/edit?usp=sharing
+Raw data is available through a range of availabilities.
 
-The data updated at least once per a day.
+#### Snowflake Data Exchange
+
+The COVID-19 data set is available on [Snowflake Data Exchange](https://www.snowflake.com/datasets/starschema/). This data set is continuously refreshed.
+
+#### S3 raw CSVs
+
+Raw CSV files are available on AWS S3:
+
+* [`CT_US_COVID_TESTS.csv`: COVID-19 tests performed in the US, by date](https://s3-us-west-1.amazonaws.com//CT_US_COVID_TESTS.csv)
+* [`JHU_COVID-19.csv`: COVID-19 case counts, by date, country and case type](https://s3-us-west-1.amazonaws.com//JHU_COVID-19.csv)
+* [`Health Care Provider Capacity.csv`: healthcare provider capacity, by state, 2018](https://s3-us-west-1.amazonaws.com/starschema.covid/KFF_HCP_capacity.csv) (from the Henry J. Kaiser Family Foundation)
+
+#### Tableau Web Data Connector
+
+There is a [Tableau Web Data Connector](https://starschema-extensions.s3.amazonaws.com/covid-tableau-online-wdc/index.html) available for your use in Tableau to integrate the COVID-19 data set into your dashboards and analytical applications. Currently, this supports the JHU CSSE data set and the Italian case counts released by the Dipartimento delle Protezione Civile.
+
 
 ### Transformations
 
