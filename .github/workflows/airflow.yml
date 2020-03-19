@@ -44,3 +44,5 @@ jobs:
         airflow test etl_JHU_COVID-19 upload_to_s3 2020-01-01   
         airflow test etl_PCM_DPS_COVID19 execute_notebook 2020-01-01   
         airflow test etl_PCM_DPS_COVID19 upload_to_s3 2020-01-01   
+        airflow test etl_CT_US_COVID_TESTS execute_notebook 2020-01-01   
+        airflow test etl_CT_US_COVID_TESTS upload_to_s3 2020-01-01   
