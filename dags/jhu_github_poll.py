@@ -17,7 +17,7 @@ args = {
 dag = DAG(
     dag_id='github_poller_jhu',
     default_args=args,
-    schedule_interval="*/10 * * * *"
+    schedule_interval="@hourly"
 )
 
 # [START howto_operator_python]
@@ -28,6 +28,8 @@ def get_last_commit(ds, **kwargs):
 
     url = 'https://api.github.com/repos/CSSEGISandData/COVID-19/commits?since={}&path=csse_covid_19_data/csse_covid_19_time_series'.format(
         since)
+
+    print("Loading data from " + url)
 
     response = requests.get(url)
     commits = response.json()
