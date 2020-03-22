@@ -5,4 +5,4 @@ pycountry
 boto3
 botocore
 tableauhyperapi
-tabula
+tabula-py
