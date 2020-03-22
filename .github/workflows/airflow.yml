@@ -22,6 +22,10 @@ jobs:
       with:
         python-version: '3.7' 
 
+    - uses: actions/setup-java@v1
+      with:
+        java-version: '9.0.4' 
+
     - name: Run pip install
       run: |
         pip install -r airflow-requirements.txt
@@ -46,3 +50,5 @@ jobs:
         airflow test etl_PCM_DPS_COVID19 upload_to_s3 2020-01-01   
         airflow test etl_CT_US_COVID_TESTS execute_notebook 2020-01-01   
         airflow test etl_CT_US_COVID_TESTS upload_to_s3 2020-01-01   
+        airflow test etl_WHO_SITUATION_REPORTS execute_notebook 2020-01-01   
+        airflow test etl_WHO_SITUATION_REPORTS upload_to_s3 2020-01-01   
