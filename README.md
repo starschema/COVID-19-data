@@ -26,6 +26,8 @@ Raw data is available through a range of availabilities.
 
 The COVID-19 data set is available on [Snowflake Data Exchange](https://www.snowflake.com/datasets/starschema/). This data set is continuously refreshed.
 
+The schema of the tables in Snowflake Data Exchange is detailed [in the wiki](https://github.com/starschema/COVID-19-data/wiki/Snowflake-Data-Exchange-schema).
+
 #### S3 raw CSVs
 
 Raw CSV files are available on AWS S3:
