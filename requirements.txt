@@ -8,4 +8,5 @@ botocore
 tableauhyperapi
 tabula-py
 lxml
+html5lib
 beautifulsoup4
