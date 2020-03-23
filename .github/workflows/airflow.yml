@@ -52,3 +52,5 @@ jobs:
         airflow test etl_CT_US_COVID_TESTS upload_to_s3 2020-01-01   
         airflow test etl_WHO_SITUATION_REPORTS execute_notebook 2020-01-01   
         airflow test etl_WHO_SITUATION_REPORTS upload_to_s3 2020-01-01   
+        airflow test etl_VH_CAN_DETAILED execute_notebook 2020-01-01   
+        airflow test etl_VH_CAN_DETAILED upload_to_s3 2020-01-01   
