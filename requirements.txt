@@ -1,4 +1,5 @@
 pandas
+requests
 pygsheets
 tqdm
 pycountry
