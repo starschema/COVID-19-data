@@ -1,0 +1,4 @@
+{
+  "CT_US_COVID_TESTS": "20 10 * * *",
+  "WHO_SITUATION_REPORTS": "0 10 * * *"
+}
