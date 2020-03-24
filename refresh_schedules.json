@@ -1,4 +1,5 @@
 {
   "CT_US_COVID_TESTS": "20 10 * * *",
-  "WHO_SITUATION_REPORTS": "0 10 * * *"
+  "WHO_SITUATION_REPORTS": "0 10 * * *",
+  "PCM_DPS_COVID19": "17 40 * * *"
 }
