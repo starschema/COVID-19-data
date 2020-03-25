@@ -24,7 +24,7 @@ dag = DAG(
 
 
 def get_last_commit(ds, **kwargs):
-    since = kwargs.get('execution_date', None)
+    since = kwargs.get('execution_date', None).strftime('%Y-%m-%dT%H:%M:%SZ')
 
     url = 'https://api.github.com/repos/CSSEGISandData/COVID-19/commits?since={}&path=csse_covid_19_data/csse_covid_19_time_series'.format(
         since)

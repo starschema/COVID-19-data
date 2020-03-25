@@ -1,7 +1,12 @@
 pandas
+requests
 pygsheets
 tqdm
 pycountry
 boto3
 botocore
 tableauhyperapi
+tabula-py
+lxml
+html5lib
+bs4
