@@ -56,8 +56,9 @@ def create_dag(dag_id, args):
         )
 
         def clean_generated_files():
-            if os.path.exists(output_file):
-                os.remove(output_file)
+            for output_file in glob.glob(output_file_glob):            
+                if os.path.exists(output_file):
+                    os.remove(output_file)
 
         def execute_notebook():
             pm.execute_notebook(
