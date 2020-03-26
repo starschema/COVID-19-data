@@ -2,21 +2,34 @@
 
 [![DOI](https://zenodo.org/badge/245742949.svg)](https://zenodo.org/badge/latestdoi/245742949) ![Test execution and deploy to DEV](https://github.com/starschema/COVID-19-data/workflows/Test%20execution%20and%20deploy%20to%20DEV/badge.svg) ![BSD 3-clause license](https://img.shields.io/badge/license-BSD--3-green)
 
-The following script takes data from the repository of the 2019 Novel Coronavirus Visual Dashboard operated by the Johns Hopkins University Center for Systems Science and Engineering (JHU CSSE). It will apply necessary cleansing/reformatting to make it use in traditional relational databases and data visualization tools.
-
-More information about the dataset with example Tableau Public Dashboards: https://www.tableau.com/covid-19-coronavirus-data-resources
-
+This data set collates a growing number of critical indicators for assessment, monitoring and forecasting of the global COVID-19 situation. The data set is maintained by [Starschema](https://starschema.com), an international data services consultancy.
 
 ## Real-time data, easy to work with
 
-Johns Hopkins University has taken the lead in compiling data in real-time and making it available to the public. Now through this JHU Coronavirus Data Stream we’ve made that real-time data easy to access and analyze alongside other data sources as it updates.
+A range of data sets have been published that are useful for monitoring and understanding the spread of COVID-19. Our efforts are intended to **collate, curate and unify** the most valuable data sources for enterprises, individuals and public health experts to assess the situation and make data-driven decisions. This single source easily blends with other data sources so you can analyze the movement of the SARS-CoV-2 pandemic over time, in any context.
 
-As a contribution by [Starschema](https://starschema.com) to global data-driven efforts to combat COVID-19, we are making this data available in a standardized format with an automated refresh. This single source easily blends with other data sources so you can analyze the movement of the disease over time, in any context.
+## Data sets
+
+Currently, the following data sets are included:
+
+| Name | Source | Table name |
+|------|--------|------------|
+| US COVID-19 testing and mortality | [The COVID Tracking Project](https://covidtracking.com) | `CT_US_COVID_TESTS` |
+| Global data on healthcare providers | OpenStreetMap, via [Healthsites.io](https://healthsites.io) | `HS_BULK_DATA` |
+| Global case counts | [JHU CSSE](https://github.com/CSSEGISandData/COVID-19) | `JHU_COVID_19` |
+| US healthcare capacity by state, 2018 | [The Henry J. Kaiser Family Foundation](https://www.kff.org/health-costs/issue-brief/state-data-and-policy-actions-to-address-coronavirus/) | `KFF_HCP_CAPACITY` |
+| US policy actions by state | [The Henry J. Kaiser Family Foundation](https://www.kff.org/health-costs/issue-brief/state-data-and-policy-actions-to-address-coronavirus/) | `KFF_US_POLICY_ACTIONS` |
+| US actions to mitigate spread, by state | [The Henry J. Kaiser Family Foundation](https://www.kff.org/health-costs/issue-brief/state-data-and-policy-actions-to-address-coronavirus/) | `KFF_US_STATE_MITIGATIONS` |
+| Italy case statistics, summary | [Protezione Civile](https://github.com/pcm-dpc/COVID-19) | `PCM_DPS_COVID19` |
+| Italy case statistics, detailed | [Protezione Civile](https://github.com/pcm-dpc/COVID-19) | `PCM_DPS_COVID19_DETAILS` |
+| WHO situation reports | [World Health Organization](https://www.who.int/emergencies/diseases/novel-coronavirus-2019/situation-reports) | `WHO_SITUATION_REPORTS` |
+
 
 ## Technical details
 
-The JHU Coronavirus Data Stream includes reported cases at the province level in China, country/province/state level in the US, Australia and Canada, and at the country level otherwise. Drawing from the JHU CSSE github repository, this cleaned (ISO-8601 date format), unioned & unpivoted dataset is updated hourly. Full information on the data sources available: https://systems.jhu.edu/research/public-health/ncov/.
+### Conventions
 
+By convention, we unify geographies to ISO-3166-1 and ISO-3166-2 alpha-2 identifiers. We use `pycountry`'s country definitions and mappings.
 
 ### Outputs
 
@@ -26,13 +39,16 @@ Raw data is available through a range of availabilities.
 
 The COVID-19 data set is available on [Snowflake Data Exchange](https://www.snowflake.com/datasets/starschema/). This data set is continuously refreshed.
 
+You can use themetadata table 
+
 #### S3 raw CSVs
 
 Raw CSV files are available on AWS S3:
 
-* [`CT_US_COVID_TESTS.csv`: COVID-19 tests performed in the US, by date](https://s3-us-west-1.amazonaws.com//CT_US_COVID_TESTS.csv)
-* [`JHU_COVID-19.csv`: COVID-19 case counts, by date, country and case type](https://s3-us-west-1.amazonaws.com//JHU_COVID-19.csv)
+* [`CT_US_COVID_TESTS.csv`: COVID-19 tests performed in the US, by date](https://s3-us-west-1.amazonaws.com/starschema.covid/CT_US_COVID_TESTS.csv)
+* [`JHU_COVID-19.csv`: COVID-19 case counts, by date, country and case type](https://s3-us-west-1.amazonaws.com/starschema.covid/JHU_COVID-19.csv)
 * [`KFF_HCP_capacity.csv`: healthcare provider capacity, by state, 2018](https://s3-us-west-1.amazonaws.com/starschema.covid/KFF_HCP_capacity.csv) (from the Henry J. Kaiser Family Foundation)
+* [`KFF_US_POLICY_ACTIONS.csv`: US policy actions, by state, current](https://s3-us-west-1.amazonaws.com/starschema.covid/KFF_US_POLICY_ACTIONS.csv) (from the Henry J. Kaiser Family Foundation)
 
 #### Tableau Web Data Connector
 
@@ -41,7 +57,7 @@ There is a [Tableau Web Data Connector](https://starschema-extensions.s3.amazona
 
 ### Transformations
 
-All applied transformation sets are documented in the `Jupyter` notebook: https://github.com/starschema/COVID-19-data/blob/master/notebooks/JHU_COVID-19.ipynb
+All applied transformation sets are documented in the `Jupyter` notebooks in the `notebooks/` folder.
 
 ## Credits
 
