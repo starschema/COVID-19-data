@@ -1,5 +1,6 @@
 {
   "CT_US_COVID_TESTS": "10 20 * * *",
-  "WHO_SITUATION_REPORTS": "10 0 * * *",
-  "PCM_DPS_COVID19": "40 17 * * *"
+  "WHO_SITUATION_REPORTS": "10 21 * * *",
+  "PCM_DPS_COVID19": "40 17 * * *",
+  "KFF_US": "@daily"
 }
