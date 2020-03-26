@@ -45,10 +45,17 @@ You can use themetadata table
 
 Raw CSV files are available on AWS S3:
 
-* [`CT_US_COVID_TESTS.csv`: COVID-19 tests performed in the US, by date](https://s3-us-west-1.amazonaws.com/starschema.covid/CT_US_COVID_TESTS.csv)
-* [`JHU_COVID-19.csv`: COVID-19 case counts, by date, country and case type](https://s3-us-west-1.amazonaws.com/starschema.covid/JHU_COVID-19.csv)
-* [`KFF_HCP_capacity.csv`: healthcare provider capacity, by state, 2018](https://s3-us-west-1.amazonaws.com/starschema.covid/KFF_HCP_capacity.csv) (from the Henry J. Kaiser Family Foundation)
-* [`KFF_US_POLICY_ACTIONS.csv`: US policy actions, by state, current](https://s3-us-west-1.amazonaws.com/starschema.covid/KFF_US_POLICY_ACTIONS.csv) (from the Henry J. Kaiser Family Foundation)
+| Name | Source | Table name |
+|------|--------|------------|
+| US COVID-19 testing and mortality | [The COVID Tracking Project](https://covidtracking.com) | [`s3://starschema.covid/CT_US_COVID_TESTS.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/CT_US_COVID_TESTS.csv) |
+| Global data on healthcare providers | OpenStreetMap, via [Healthsites.io](https://healthsites.io) | [`s3://starschema.covid/HS_BULK_DATA.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/HS_BULK_DATA.csv) |
+| Global case counts | [JHU CSSE](https://github.com/CSSEGISandData/COVID-19) | [`s3://starschema.covid/JHU_COVID-19.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/JHU_COVID-19.csv) |
+| US healthcare capacity by state, 2018 | [The Henry J. Kaiser Family Foundation](https://www.kff.org/health-costs/issue-brief/state-data-and-policy-actions-to-address-coronavirus/) | [`s3://starschema.covid/KFF_HCP_capacity.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/KFF_HCP_capacity.csv) |
+| US policy actions by state | [The Henry J. Kaiser Family Foundation](https://www.kff.org/health-costs/issue-brief/state-data-and-policy-actions-to-address-coronavirus/) | [`s3://starschema.covid/KFF_US_POLICY_ACTIONS.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/KFF_US_POLICY_ACTIONS.csv) |
+| US actions to mitigate spread, by state | [The Henry J. Kaiser Family Foundation](https://www.kff.org/health-costs/issue-brief/state-data-and-policy-actions-to-address-coronavirus/) | [`s3://starschema.covid/KFF_US_STATE_MITIGATIONS.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/KFF_US_STATE_MITIGATIONS.csv) |
+| Italy case statistics, summary | [Protezione Civile](https://github.com/pcm-dpc/COVID-19) | [`s3://starschema.covid/PCM_DPS_COVID19.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/PCM_DPS_COVID19.csv) |
+| Italy case statistics, detailed | [Protezione Civile](https://github.com/pcm-dpc/COVID-19) | [`s3://starschema.covid/PCM_DPS_COVID19-DETAILS.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/PCM_DPS_COVID19-DETAILS.csv) |
+| WHO situation reports | [World Health Organization](https://www.who.int/emergencies/diseases/novel-coronavirus-2019/situation-reports) | [`s3://starschema.covid/WHO_SITUATION_REPORTS.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/WHO_SITUATION_REPORTS.csv) |
 
 #### Tableau Web Data Connector
 
