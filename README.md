@@ -40,7 +40,7 @@ Raw data is available through a range of availabilities.
 
 The COVID-19 data set is available on [Snowflake Data Exchange](https://www.snowflake.com/datasets/starschema/). This data set is continuously refreshed.
 
-You can use themetadata table 
+You can use the `METADATA` table for metadata about each table, on a column level. Where the column is not specified, information pertains to the entire table.
 
 #### S3 raw CSVs
 
