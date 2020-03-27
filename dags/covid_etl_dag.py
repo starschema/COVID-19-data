@@ -94,9 +94,11 @@ def create_dag(dag_id, args):
             for output_file in glob.glob(output_file_glob):
                 s3_file_name = os.path.basename(output_file)
                 tablename = os.path.splitext(s3_file_name)[0].replace("-", "_")
+                snowflake_stage = Variable.get("SNOWFLAKE_STAGE", default_var="COVID_PROD")
+                print( f'using stage: "{snowflake_stage}"' )
 
                 truncate_st = f'TRUNCATE TABLE {tablename}'
-                insert_st = f'copy into {tablename} from @COVID_PROD/{s3_file_name} file_format = (type = "csv" field_delimiter = ","  FIELD_OPTIONALLY_ENCLOSED_BY=\'"\' skip_header = 1)'
+                insert_st = f'copy into {tablename} from @{snowflake_stage}/{s3_file_name} file_format = (type = "csv" field_delimiter = ","  FIELD_OPTIONALLY_ENCLOSED_BY=\'"\' skip_header = 1)'
                 sql_statements.append(truncate_st)
                 sql_statements.append(insert_st)
 
