@@ -50,7 +50,7 @@ jobs:
         export AIRFLOW_HOME=${{ GITHUB.workspace }}
         for i in $AIRFLOW_HOME/notebooks/* ; do 
           load=`basename $i`;
-          load=$(echo "$FILE" | sed 's/\.[^.]*$//');
+          load=$(echo "$i" | sed 's/\.[^.]*$//');
           airflow test etl_$load execute_notebook 2020-01-01;
           airflow test etl_$load upload_to_s3 2020-01-01;
           airflow test etl_$load upload_to_snowflake 2020-01-01;
