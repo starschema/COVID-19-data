@@ -69,6 +69,7 @@ with dag:
             dag=dag
         )
 
+        start_op >> check_github_op
         check_github_op >> trigger_etl_op
         check_github_op >> stop_op
         trigger_etl_op >> stop_op
