@@ -4,9 +4,16 @@ from airflow.utils.dates import days_ago
 from airflow.operators.python_operator import BranchPythonOperator
 from airflow.operators.dagrun_operator import TriggerDagRunOperator
 from airflow.operators.dummy_operator import DummyOperator
-
+from airflow.configuration import conf
+import json
 import requests
 from datetime import datetime, timedelta
+
+DAGS_FOLDER = conf.get('core', 'dags_folder')
+
+with open( DAGS_FOLDER + "/../refresh_schedules.json", 'r') as f:
+    schedules = json.load(f)
+
 
 args = {
     'owner': 'admin',
@@ -14,20 +21,12 @@ args = {
     'catchup_by_default': False
 }
 
-dag = DAG(
-    dag_id='github_poller_jhu',
-    default_args=args,
-    schedule_interval="@hourly"
-)
-
-# [START howto_operator_python]
-
-
 def get_last_commit(ds, **kwargs):
     since = kwargs.get('execution_date', None).strftime('%Y-%m-%dT%H:%M:%SZ')
+    name =kwargs.get('name')
+    url_template =kwargs.get('url')
 
-    url = 'https://api.github.com/repos/CSSEGISandData/COVID-19/commits?since={}&path=csse_covid_19_data/csse_covid_19_time_series'.format(
-        since)
+    url = url_template.format(since)
 
     print("Loading data from " + url)
 
@@ -36,28 +35,40 @@ def get_last_commit(ds, **kwargs):
 
     if len(commits) > 0:
         print("We should run now.")
-        return "trigger_etl"
+        return f"trigger_{name.lower()}"
     else:
         return "stop"
 
-
-check_github_op = BranchPythonOperator (
-    task_id='check_if_commit_happened',
-    python_callable=get_last_commit,
-    provide_context=True,
-    trigger_rule="all_done",
-    dag=dag,
+dag = DAG(
+    dag_id='github_poll_trigger',
+    default_args=args,
+    schedule_interval="@hourly"
 )
 
-trigger_etl_op = TriggerDagRunOperator(
-    task_id="trigger_etl",
-    trigger_dag_id="etl_JHU_COVID-19",  
-    dag=dag
-)
 
-stop_op = DummyOperator(task_id='stop', trigger_rule="all_done", dag=dag)
+with dag:
+    
+    stop_op = DummyOperator(task_id='stop', trigger_rule="all_done", dag=dag)
+    
+    start_op = DummyOperator(task_id='start', dag=dag)
 
+    for name,url in schedules["github"].items():
 
-check_github_op >> trigger_etl_op
-check_github_op >> stop_op
-trigger_etl_op >> stop_op
+        check_github_op = BranchPythonOperator (
+            task_id=f'check_commits_{name.lower()}',
+            python_callable=get_last_commit,
+            provide_context=True,
+            op_kwargs={"name": name, "url": url},
+            trigger_rule="all_done",
+            dag=dag,
+        )
+
+        trigger_etl_op = TriggerDagRunOperator(
+            task_id=f"trigger_{name.lower()}",
+            trigger_dag_id=f'etl_{name}',  
+            dag=dag
+        )
+
+        check_github_op >> trigger_etl_op
+        check_github_op >> stop_op
+        trigger_etl_op >> stop_op
