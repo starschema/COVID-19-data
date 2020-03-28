@@ -24,6 +24,7 @@ Currently, the following data sets are included:
 | Italy case statistics, summary | [Protezione Civile](https://github.com/pcm-dpc/COVID-19) | `PCM_DPS_COVID19` |
 | Italy case statistics, detailed | [Protezione Civile](https://github.com/pcm-dpc/COVID-19) | `PCM_DPS_COVID19_DETAILS` |
 | WHO situation reports | [World Health Organization](https://www.who.int/emergencies/diseases/novel-coronavirus-2019/situation-reports) | `WHO_SITUATION_REPORTS` |
+| US case and mortality counts, by county | [The New York Times](https://github.com/nytimes/covid-19-data) | `NYT_US_COVID19` |
 
 
 ## Technical details
@@ -58,6 +59,9 @@ Raw CSV files are available on AWS S3:
 | Italy case statistics, summary | [Protezione Civile](https://github.com/pcm-dpc/COVID-19) | [`s3://starschema.covid/PCM_DPS_COVID19.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/PCM_DPS_COVID19.csv) |
 | Italy case statistics, detailed | [Protezione Civile](https://github.com/pcm-dpc/COVID-19) | [`s3://starschema.covid/PCM_DPS_COVID19-DETAILS.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/PCM_DPS_COVID19-DETAILS.csv) |
 | WHO situation reports | [World Health Organization](https://www.who.int/emergencies/diseases/novel-coronavirus-2019/situation-reports) | [`s3://starschema.covid/WHO_SITUATION_REPORTS.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/WHO_SITUATION_REPORTS.csv) |
+| US case and mortality counts, by county | [The New York Times](https://github.com/nytimes/covid-19-data) | [`s3://starschema.covid/NYT_US_COVID19.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/NYT_US_COVID19.csv) |
+
+
 
 #### Tableau Web Data Connector
 
