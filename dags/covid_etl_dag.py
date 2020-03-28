@@ -44,7 +44,7 @@ def create_dag(dag_id, args):
     dag = DAG(
         dag_id=dag_id,
         default_args=args,
-        schedule_interval=schedules.get(basename,None),
+        schedule_interval=schedules["recurring"].get(basename,None),
         dagrun_timeout=timedelta(minutes=60)
     )
 
