@@ -26,6 +26,8 @@ Currently, the following data sets are included:
 | WHO situation reports | [World Health Organization](https://www.who.int/emergencies/diseases/novel-coronavirus-2019/situation-reports) | `WHO_SITUATION_REPORTS` |
 | US case and mortality counts, by county | [The New York Times](https://github.com/nytimes/covid-19-data) | `NYT_US_COVID19` |
 | COVID-19 cases and deaths, Canada, province level | [ViriHealth](https://virihealth.com) | `VH_CAN_DETAILED` |
+| Travel restrictions by country | [World Food Programme via HDX](https://data.humdata.org/dataset/covid-19-global-travel-restrictions-and-airline-information) | `HUM_RESTRICTIONS_COUNTRY` |
+| Travel restrictions by airline | [World Food Programme via HDX](https://data.humdata.org/dataset/covid-19-global-travel-restrictions-and-airline-information) | `HUM_RESTRICTIONS_AIRLINE` |
 
 
 ## Technical details
