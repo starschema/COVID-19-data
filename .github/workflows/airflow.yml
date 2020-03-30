@@ -55,5 +55,4 @@ jobs:
           airflow test etl_$load upload_to_s3 2020-01-01;
           airflow test etl_$load upload_to_snowflake 2020-01-01;
           done
-
-           
+        airflow test github_poll_trigger check_commits_jhu_covid-19 2020-03-27  

@@ -45,7 +45,7 @@ def create_dag(dag_id, args):
         dag_id=dag_id,
         default_args=args,
         max_active_runs=1,
-        schedule_interval=schedules.get(basename,None),
+        schedule_interval=schedules["recurring"].get(basename,None),
         dagrun_timeout=timedelta(minutes=60)
     )
 
@@ -98,7 +98,6 @@ def create_dag(dag_id, args):
                 s3_file_name = os.path.basename(output_file)
                 tablename = os.path.splitext(s3_file_name)[0].replace("-", "_")
                 snowflake_stage = Variable.get("SNOWFLAKE_STAGE", default_var="COVID_PROD")
-                print( f'using stage: "{snowflake_stage}"' )
 
                 truncate_st = f'TRUNCATE TABLE {tablename}'
                 insert_st = f'copy into {tablename} from @{snowflake_stage}/{s3_file_name} file_format = (type = "csv" field_delimiter = ","  FIELD_OPTIONALLY_ENCLOSED_BY=\'"\' skip_header = 1)'
