@@ -2,6 +2,7 @@
   "recurring": {
     "CT_US_COVID_TESTS": "10 20 * * *",
     "WHO_SITUATION_REPORTS": "10 21 * * *",
+    "HUM_RESTRICTIONS": "@dailly",
     "KFF_US": "@daily"
   },
   "github": {
