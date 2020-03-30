@@ -62,7 +62,8 @@ Raw CSV files are available on AWS S3:
 | WHO situation reports | [World Health Organization](https://www.who.int/emergencies/diseases/novel-coronavirus-2019/situation-reports) | [`s3://starschema.covid/WHO_SITUATION_REPORTS.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/WHO_SITUATION_REPORTS.csv) |
 | US case and mortality counts, by county | [The New York Times](https://github.com/nytimes/covid-19-data) | [`s3://starschema.covid/NYT_US_COVID19.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/NYT_US_COVID19.csv) |
 | COVID-19 cases and deaths, Canada, province level | [ViriHealth](https://virihealth.com) | [`s3://starschema.covid/NVH_CAN_DETAILED.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/VH_CAN_DETAILED.csv) |
-
+| Travel restrictions by country | [World Food Programme via HDX](https://data.humdata.org/dataset/covid-19-global-travel-restrictions-and-airline-information) | [`s3://starschema.covid/HUM_RESTRICTIONS_COUNTRY`](https://s3-us-west-1.amazonaws.com/starschema.covid/HUM_RESTRICTIONS_COUNTRY.csv) |
+| Travel restrictions by airline | [World Food Programme via HDX](https://data.humdata.org/dataset/covid-19-global-travel-restrictions-and-airline-information) | [`s3://starschema.covid/HUM_RESTRICTIONS_AIRLINE`](https://s3-us-west-1.amazonaws.com/starschema.covid/HUM_RESTRICTIONS_AIRLINE.csv) |
 
 #### Tableau Web Data Connector
 

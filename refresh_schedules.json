@@ -1,6 +1,12 @@
 {
-  "CT_US_COVID_TESTS": "10 20 * * *",
-  "WHO_SITUATION_REPORTS": "10 21 * * *",
-  "PCM_DPS_COVID19": "40 17 * * *",
-  "KFF_US": "@daily"
+  "recurring": {
+    "CT_US_COVID_TESTS": "10 20 * * *",
+    "WHO_SITUATION_REPORTS": "10 21 * * *",
+    "KFF_US": "@daily"
+  },
+  "github": {
+    "JHU_COVID-19": "https://api.github.com/repos/CSSEGISandData/COVID-19/commits?since={}&path=csse_covid_19_data/csse_covid_19_time_series",
+    "NYT_US_COVID19": "https://api.github.com/repos/nytimes/covid-19-data/commits?since={}&path=",
+    "PCM_DPS_COVID19": "https://api.github.com/repos/pcm-dpc/COVID-19/commits?since={}&path=dati-regioni" 
+  }
 }
