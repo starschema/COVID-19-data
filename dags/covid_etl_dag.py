@@ -44,6 +44,7 @@ def create_dag(dag_id, args):
     dag = DAG(
         dag_id=dag_id,
         default_args=args,
+        max_active_runs=1,
         schedule_interval=schedules.get(basename,None),
         dagrun_timeout=timedelta(minutes=60)
     )
@@ -78,6 +79,8 @@ def create_dag(dag_id, args):
             :return: True if file was uploaded, else False
             """
             # Upload the file
+            response = False
+
             s3_client = boto3.client('s3', aws_access_key_id=Variable.get("AWS_ACCESS_KEY_ID"),
                                      aws_secret_access_key=Variable.get("AWS_SECRET_ACCESS_KEY"))
             for output_file in glob.glob(output_file_glob):
