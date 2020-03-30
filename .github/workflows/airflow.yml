@@ -48,6 +48,7 @@ jobs:
     - name: Run DAG tests
       run: |
         export AIRFLOW_HOME=${{ GITHUB.workspace }}
+        export ENVIRONMENT=ci
         for i in $AIRFLOW_HOME/notebooks/* ; do 
           load=`basename $i`;
           load=$(echo "$load" | sed 's/\.[^.]*$//');
