@@ -26,6 +26,11 @@ Currently, the following data sets are included:
 | WHO situation reports | [World Health Organization](https://www.who.int/emergencies/diseases/novel-coronavirus-2019/situation-reports) | `WHO_SITUATION_REPORTS` |
 | US case and mortality counts, by county | [The New York Times](https://github.com/nytimes/covid-19-data) | `NYT_US_COVID19` |
 | COVID-19 cases and deaths, Canada, province level | [ViriHealth](https://virihealth.com) | `VH_CAN_DETAILED` |
+| Travel restrictions by country | [World Food Programme via HDX](https://data.humdata.org/dataset/covid-19-global-travel-restrictions-and-airline-information) | `HUM_RESTRICTIONS_COUNTRY` |
+| Travel restrictions by airline | [World Food Programme via HDX](https://data.humdata.org/dataset/covid-19-global-travel-restrictions-and-airline-information) | `HUM_RESTRICTIONS_AIRLINE` |
+| ACAPS public health restriction data | [ACAPS via HDX](https://data.humdata.org/dataset/acaps-covid19-government-measures-dataset) | `HDX_ACAPS` |
+
+
 
 
 ## Technical details
@@ -64,6 +69,9 @@ Raw CSV files are available on AWS S3:
 | COVID-19 cases and deaths, Canada, province level | [ViriHealth](https://virihealth.com) | [`s3://starschema.covid/NVH_CAN_DETAILED.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/VH_CAN_DETAILED.csv) |
 | Travel restrictions by country | [World Food Programme via HDX](https://data.humdata.org/dataset/covid-19-global-travel-restrictions-and-airline-information) | [`s3://starschema.covid/HUM_RESTRICTIONS_COUNTRY`](https://s3-us-west-1.amazonaws.com/starschema.covid/HUM_RESTRICTIONS_COUNTRY.csv) |
 | Travel restrictions by airline | [World Food Programme via HDX](https://data.humdata.org/dataset/covid-19-global-travel-restrictions-and-airline-information) | [`s3://starschema.covid/HUM_RESTRICTIONS_AIRLINE`](https://s3-us-west-1.amazonaws.com/starschema.covid/HUM_RESTRICTIONS_AIRLINE.csv) |
+| ACAPS public health restriction data | [ACAPS via HDX](https://data.humdata.org/dataset/covid-19-global-travel-restrictions-and-airline-information) | [`s3://starschema.covid/HDX_ACAPS.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/HDX_ACAPS.csv) |
+
+
 
 #### Tableau Web Data Connector
 
