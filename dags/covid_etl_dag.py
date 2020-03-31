@@ -115,14 +115,6 @@ def create_dag(dag_id, args):
 
             return create_insert_task
 
-        def create_dynamic_etl(task_id, callable_function):
-            task = PythonOperator(
-                task_id=task_id,
-                python_callable=callable_function,
-                dag=dag,
-            )
-            return task
-
         end = DummyOperator(
             task_id='end',
             dag=dag)
