@@ -8,6 +8,7 @@ botocore
 tableauhyperapi
 tabula-py
 lxml
+xlrd
 html5lib
 bs4
 seaborn
