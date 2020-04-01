@@ -75,7 +75,7 @@ Raw CSV files are available on AWS S3:
 
 #### Tableau Web Data Connector
 
-There is a [Tableau Web Data Connector](https://starschema-extensions.s3.amazonaws.com/covid-tableau-online-wdc/index.html) available for your use in Tableau to integrate the COVID-19 data set into your dashboards and analytical applications. Currently, this supports the JHU CSSE data set and the Italian case counts released by the Dipartimento delle Protezione Civile.
+There is a [Tableau Web Data Connector](https://starschema-extensions.s3.amazonaws.com/covid-tableau-online-wdc/index.html) available for your use in Tableau to integrate the COVID-19 data set into your dashboards and analytical applications. Currently, this supports the JHU CSSE data set and the Italian case counts released by the Dipartimento delle Protezione Civile. The reach of the WDC is currently being expanded, please check back for details.
 
 
 ### Transformations
