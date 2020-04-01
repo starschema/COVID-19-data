@@ -2,7 +2,9 @@
   "recurring": {
     "CT_US_COVID_TESTS": "10 20 * * *",
     "WHO_SITUATION_REPORTS": "10 21 * * *",
-    "KFF_US": "@daily"
+    "HUM_RESTRICTIONS": "@daily",
+    "KFF_US": "@daily",
+    "HDX_ACAPS": "@daily"
   },
   "github": {
     "JHU_COVID-19": "https://api.github.com/repos/CSSEGISandData/COVID-19/commits?since={}&path=csse_covid_19_data/csse_covid_19_time_series",

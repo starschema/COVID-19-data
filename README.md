@@ -26,6 +26,11 @@ Currently, the following data sets are included:
 | WHO situation reports | [World Health Organization](https://www.who.int/emergencies/diseases/novel-coronavirus-2019/situation-reports) | `WHO_SITUATION_REPORTS` |
 | US case and mortality counts, by county | [The New York Times](https://github.com/nytimes/covid-19-data) | `NYT_US_COVID19` |
 | COVID-19 cases and deaths, Canada, province level | [ViriHealth](https://virihealth.com) | `VH_CAN_DETAILED` |
+| Travel restrictions by country | [World Food Programme via HDX](https://data.humdata.org/dataset/covid-19-global-travel-restrictions-and-airline-information) | `HUM_RESTRICTIONS_COUNTRY` |
+| Travel restrictions by airline | [World Food Programme via HDX](https://data.humdata.org/dataset/covid-19-global-travel-restrictions-and-airline-information) | `HUM_RESTRICTIONS_AIRLINE` |
+| ACAPS public health restriction data | [ACAPS via HDX](https://data.humdata.org/dataset/acaps-covid19-government-measures-dataset) | `HDX_ACAPS` |
+
+
 
 
 ## Technical details
@@ -61,12 +66,16 @@ Raw CSV files are available on AWS S3:
 | Italy case statistics, detailed | [Protezione Civile](https://github.com/pcm-dpc/COVID-19) | [`s3://starschema.covid/PCM_DPS_COVID19-DETAILS.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/PCM_DPS_COVID19-DETAILS.csv) |
 | WHO situation reports | [World Health Organization](https://www.who.int/emergencies/diseases/novel-coronavirus-2019/situation-reports) | [`s3://starschema.covid/WHO_SITUATION_REPORTS.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/WHO_SITUATION_REPORTS.csv) |
 | US case and mortality counts, by county | [The New York Times](https://github.com/nytimes/covid-19-data) | [`s3://starschema.covid/NYT_US_COVID19.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/NYT_US_COVID19.csv) |
-| COVID-19 cases and deaths, Canada, province level | [ViriHealth](https://virihealth.com) | [`s3://starschema.covid/NVH_CAN_DETAILED.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/VH_CAN_DETAILED.csv) |
+| COVID-19 cases and deaths, Canada, province level | [ViriHealth](https://virihealth.com) | [`s3://starschema.covid/VH_CAN_DETAILED.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/VH_CAN_DETAILED.csv) |
+| Travel restrictions by country | [World Food Programme via HDX](https://data.humdata.org/dataset/covid-19-global-travel-restrictions-and-airline-information) | [`s3://starschema.covid/HUM_RESTRICTIONS_COUNTRY`](https://s3-us-west-1.amazonaws.com/starschema.covid/HUM_RESTRICTIONS_COUNTRY.csv) |
+| Travel restrictions by airline | [World Food Programme via HDX](https://data.humdata.org/dataset/covid-19-global-travel-restrictions-and-airline-information) | [`s3://starschema.covid/HUM_RESTRICTIONS_AIRLINE`](https://s3-us-west-1.amazonaws.com/starschema.covid/HUM_RESTRICTIONS_AIRLINE.csv) |
+| ACAPS public health restriction data | [ACAPS via HDX](https://data.humdata.org/dataset/covid-19-global-travel-restrictions-and-airline-information) | [`s3://starschema.covid/HDX_ACAPS.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/HDX_ACAPS.csv) |
+
 
 
 #### Tableau Web Data Connector
 
-There is a [Tableau Web Data Connector](https://starschema-extensions.s3.amazonaws.com/covid-tableau-online-wdc/index.html) available for your use in Tableau to integrate the COVID-19 data set into your dashboards and analytical applications. Currently, this supports the JHU CSSE data set and the Italian case counts released by the Dipartimento delle Protezione Civile.
+There is a [Tableau Web Data Connector](https://starschema-extensions.s3.amazonaws.com/covid-tableau-online-wdc/index.html) available for your use in Tableau to integrate the COVID-19 data set into your dashboards and analytical applications. Currently, this supports the JHU CSSE data set and the Italian case counts released by the Dipartimento delle Protezione Civile. The reach of the WDC is currently being expanded, please check back for details.
 
 
 ### Transformations
