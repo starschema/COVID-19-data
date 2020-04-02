@@ -96,7 +96,7 @@ def create_dag(dag_id, args):
                 snowflake_stage = Variable.get("SNOWFLAKE_STAGE", default_var="COVID_PROD")
 
                 truncate_st = f'TRUNCATE TABLE {tablename}'
-                insert_st = f'copy into {tablename} from @{snowflake_stage}/{s3_file_name} file_format = (type = "csv" field_delimiter = ","  FIELD_OPTIONALLY_ENCLOSED_BY=\'"\' skip_header = 1)'
+                insert_st = f'copy into {tablename} from @{snowflake_stage}/{s3_file_name} file_format = (type = "csv" field_delimiter = "," NULL_IF = (\'NULL\', \'null\',\'\') EMPTY_FIELD_AS_NULL = true FIELD_OPTIONALLY_ENCLOSED_BY=\'"\' skip_header = 1)'
                 sql_statements.append(truncate_st)
                 sql_statements.append(insert_st)
 
