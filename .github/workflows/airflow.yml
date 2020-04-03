@@ -49,7 +49,7 @@ jobs:
       run: |
         export AIRFLOW_HOME=${{ GITHUB.workspace }}
         export ENVIRONMENT=CI
-        export GSHEET_API_CREDENTIALS=${{ secrets.GSHEET_API_CREDENTIALS }}
+        export GSHEET_API_CREDENTIALS='${{ secrets.GSHEET_API_CREDENTIALS }}'
         for i in $AIRFLOW_HOME/notebooks/* ; do 
           load=`basename $i`;
           load=$(echo "$load" | sed 's/\.[^.]*$//');
