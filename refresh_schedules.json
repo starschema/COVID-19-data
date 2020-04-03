@@ -5,7 +5,8 @@
     "HUM_RESTRICTIONS": "@daily",
     "KFF_US": "@daily",
     "HDX_ACAPS": "@daily",
-    "VH_CAN_DETAILED": "@daily"
+    "VH_CAN_DETAILED": "@daily",
+    "SCS_BE_DETAILED": "@daily
   },
   "github": {
     "JHU_COVID-19": "https://api.github.com/repos/CSSEGISandData/COVID-19/commits?since={}&path=csse_covid_19_data/csse_covid_19_time_series",
