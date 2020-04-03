@@ -29,6 +29,10 @@ Currently, the following data sets are included:
 | Travel restrictions by country | [World Food Programme via HDX](https://data.humdata.org/dataset/covid-19-global-travel-restrictions-and-airline-information) | `HUM_RESTRICTIONS_COUNTRY` |
 | Travel restrictions by airline | [World Food Programme via HDX](https://data.humdata.org/dataset/covid-19-global-travel-restrictions-and-airline-information) | `HUM_RESTRICTIONS_AIRLINE` |
 | ACAPS public health restriction data | [ACAPS via HDX](https://data.humdata.org/dataset/acaps-covid19-government-measures-dataset) | `HDX_ACAPS` |
+| Detailed case counts by province, sex and age band, Belgium | [Sciensano](https://www.sciensano.be/en) | `SCS_BE_DETAILED_PROVINCE_CASE_COUNTS` |
+| Detailed hospitalisations by type of hospital care, Belgium | [Sciensano](https://www.sciensano.be/en) | `SCS_BE_DETAILED_HOSPITALISATIONS` |
+| Detailed mortality by region, sex and age band, Belgium | [Sciensano](https://www.sciensano.be/en) | `SCS_BE_DETAILED_MORTALITY` |
+| Number of tests performed by day, Belgium | [Sciensano](https://www.sciensano.be/en) | `SCS_BE_DETAILED_TESTS` |
 
 
 
@@ -70,6 +74,12 @@ Raw CSV files are available on AWS S3:
 | Travel restrictions by country | [World Food Programme via HDX](https://data.humdata.org/dataset/covid-19-global-travel-restrictions-and-airline-information) | [`s3://starschema.covid/HUM_RESTRICTIONS_COUNTRY`](https://s3-us-west-1.amazonaws.com/starschema.covid/HUM_RESTRICTIONS_COUNTRY.csv) |
 | Travel restrictions by airline | [World Food Programme via HDX](https://data.humdata.org/dataset/covid-19-global-travel-restrictions-and-airline-information) | [`s3://starschema.covid/HUM_RESTRICTIONS_AIRLINE`](https://s3-us-west-1.amazonaws.com/starschema.covid/HUM_RESTRICTIONS_AIRLINE.csv) |
 | ACAPS public health restriction data | [ACAPS via HDX](https://data.humdata.org/dataset/covid-19-global-travel-restrictions-and-airline-information) | [`s3://starschema.covid/HDX_ACAPS.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/HDX_ACAPS.csv) |
+
+
+| Detailed case counts by province, sex and age band, Belgium | [Sciensano](https://www.sciensano.be/en) | [`s3://starschema.covid/SCS_BE_DETAILED_PROVINCE_CASE_COUNTS.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/SCS_BE_DETAILED_PROVINCE_CASE_COUNTS.csv) |
+| Detailed hospitalisations by type of hospital care, Belgium | [Sciensano](https://www.sciensano.be/en) | [`s3://starschema.covid/SCS_BE_DETAILED_HOSPITALISATIONS.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/SCS_BE_DETAILED_HOSPITALISATIONS.csv) |
+| Detailed mortality by region, sex and age band, Belgium | [Sciensano](https://www.sciensano.be/en) | [`s3://starschema.covid/SCS_BE_DETAILED_MORTALITY.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/SCS_BE_DETAILED_MORTALITY.csv) |
+| Number of tests performed by day, Belgium | [Sciensano](https://www.sciensano.be/en) | [`s3://starschema.covid/SCS_BE_DETAILED_TESTS.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/SCS_BE_DETAILED_TESTS.csv) |
 
 
 
