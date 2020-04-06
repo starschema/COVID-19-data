@@ -25,8 +25,8 @@ OUTPUT_FOLDER = os.path.abspath(
     conf.get('core', 'dags_folder') + "/../output") + "/"
 QA_FOLDER = os.path.abspath(
     conf.get('core', 'dags_folder') + "/../snowflake/qa") + "/"
-GITUSER = Variable.get('GIT_USER')
-GITTOKEN = Variable.get('GIT_TOKEN')
+GITUSER = Variable.get('GIT_USER', default_var=None)
+GITTOKEN = Variable.get('GIT_TOKEN', default_var=None)
 
 with open( DAGS_FOLDER + "/../refresh_schedules.json", 'r') as f:
     schedules = json.load(f)
@@ -134,7 +134,7 @@ def create_dag(dag_id, args):
             return create_insert_task
         
         def qa_checks(**context):
-            try:
+            if os.path.exists(qa_file) and GITUSER is not None and GITTOKEN is not None:
                 with open(qa_file, 'r') as fd:
                     sqlfile = fd.read()
                     sqllist = sqlfile.split(";")
@@ -148,8 +148,6 @@ def create_dag(dag_id, args):
                                                       "Error: " + row['ERROR_DESC'] + "\n" + "Error Count: " + str(
                                                           row['ERROR_COUNT']) + "\n" + row['ERROR_CONDITION'],
                                                       ['bug', 'qa'])
-            except IOError:
-                print("No QA to perform")
 
         def create_dynamic_etl(task_id, callable_function):
             task = PythonOperator(
