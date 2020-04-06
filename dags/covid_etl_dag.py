@@ -1,21 +1,23 @@
-import airflow
+import os
+import glob
+import papermill as pm
 import boto3
 import json
 import requests
-from airflow import DAG
+import tempfile
+import logging
 from datetime import timedelta
 
+
+import airflow
+from airflow import DAG
 from airflow.contrib.hooks.snowflake_hook import SnowflakeHook
 from airflow.utils.dates import days_ago
 from airflow.operators.python_operator import PythonOperator
 from airflow.contrib.operators.snowflake_operator import SnowflakeOperator
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.models import Variable
-import os
-import glob
-import papermill as pm
 from airflow.configuration import conf
-import tempfile
 
 
 DAGS_FOLDER = conf.get('core', 'dags_folder')
@@ -103,10 +105,10 @@ def create_dag(dag_id, args):
                      'labels': labels}
             r = ses.post(url, json.dumps(issue))
             if r.status_code == 201:
-                print('Successfully created Issue "%s"' % title)
+                logger.info('Successfully created Issue "%s"' % title)
             else:
-                print('Could not create Issue "%s"' % title)
-                print('Response:', r.content)
+                logger.error('Could not create Issue "%s"' % title)
+                logger.info('Response:', r.content)
 
         def upload_to_snowflake(task_id):
             sql_statements = []
