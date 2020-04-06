@@ -173,14 +173,20 @@ def create_dag(dag_id, args):
 
         upload_to_snowflake_task = upload_to_snowflake('upload_to_snowflake')
         
-        run_qa_task = PythonOperator(task_id="run_qa", python_callable=qa_checks)
 
+        # Execution flow & dependencies
         start >> cleanup_output_folder_task
         cleanup_output_folder_task >> execute_notebook_task
         execute_notebook_task >> upload_to_s3_task
         upload_to_s3_task >> upload_to_snowflake_task
-        upload_to_snowflake_task >> run_qa_task
-        run_qa_task >> end
+
+        # if we have QA step, include it - otherwise just end processing after snowflake upload
+        if os.path.exists(qa_file):
+            run_qa_task = PythonOperator(task_id="run_qa", python_callable=qa_checks)
+            upload_to_snowflake_task >> run_qa_task
+            run_qa_task >> end
+        else:
+            upload_to_snowflake_task >> end
 
         return dag
 
