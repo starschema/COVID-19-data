@@ -41,6 +41,8 @@ jobs:
         airflow variables -s AWS_SECRET_ACCESS_KEY ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         airflow variables -s SNOWFLAKE_CONNECTION SNOWFLAKE_DEV
         airflow variables -s SNOWFLAKE_STAGE COVID_DEV
+        airflow variables -s GIT_USER ${{ secrets.GIT_USER }}
+        airflow variables -s GIT_TOKEN ${{ secrets.GIT_TOKEN }}
         airflow connections -a --conn_id SNOWFLAKE_DEV --conn_type snowflake --conn_host starschema.snowflakecomputing.com --conn_login etl --conn_password '${{ secrets.SNOWFLAKE_ETL_PASSWORD }}' --conn_schema PUBLIC --conn_extra '{ "account": "starschema", "warehouse": "LOAD_WH", "database": "COVID19_DEV", "region": "us-west-2", "role": "COVID_ADMIN" }'
         airflow connections -l
         airflow list_dags

@@ -27,8 +27,9 @@ OUTPUT_FOLDER = os.path.abspath(
     conf.get('core', 'dags_folder') + "/../output") + "/"
 QA_FOLDER = os.path.abspath(
     conf.get('core', 'dags_folder') + "/../snowflake/qa") + "/"
-GITUSER = Variable.get('GIT_USER', default_var=None)
-GITTOKEN = Variable.get('GIT_TOKEN', default_var=None)
+GIT_USER = Variable.get('GIT_USER', default_var=None)
+GIT_TOKEN = Variable.get('GIT_TOKEN', default_var=None)
+ENVIRONMENT = Variable.get('ENVIRONMENT', default_var=None)
 
 with open( DAGS_FOLDER + "/../refresh_schedules.json", 'r') as f:
     schedules = json.load(f)
@@ -71,8 +72,10 @@ def create_dag(dag_id, args):
             pm.execute_notebook(
                 input_path=notebook_file,
                 output_path="/dev/null",
-                parameters=dict(
-                    {"output_folder": OUTPUT_FOLDER}),
+                parameters=dict({
+                    "output_folder": OUTPUT_FOLDER, 
+                    "GIT_USER": GIT_USER, 
+                    "GIT_TOKEN": GIT_TOKEN}),
                 log_output=True,
                 report_mode=True
             )
@@ -99,7 +102,7 @@ def create_dag(dag_id, args):
         def make_github_issue(title, body=None, labels=None):
             url = 'https://api.github.com/repos/starschema/COVID-19-data/issues'
             ses = requests.session()
-            ses.auth = (GITUSER, GITTOKEN)
+            ses.auth = (GIT_USER, GIT_TOKEN)
             issue = {'title': title,
                      'body': body,
                      'labels': labels}
@@ -136,7 +139,7 @@ def create_dag(dag_id, args):
             return create_insert_task
         
         def qa_checks(**context):
-            if os.path.exists(qa_file) and GITUSER is not None and GITTOKEN is not None:
+            if os.path.exists(qa_file) and GIT_USER is not None and GIT_TOKEN is not None and ENVIRONMENT != 'CI':
                 with open(qa_file, 'r') as fd:
                     sqlfile = fd.read()
                     sqllist = sqlfile.split(";")
