@@ -145,7 +145,7 @@ def create_dag(dag_id, args):
                     sqllist = sqlfile.split(";")
                     sf_hook = SnowflakeHook(snowflake_conn_id=Variable.get("SNOWFLAKE_CONNECTION", default_var="SNOWFLAKE"))
                     for sql in sqllist:
-                        if len(strip(sql)) > 5:
+                        if len(sql.strip()) > 5:
                             result = sf_hook.get_pandas_df(sql)
                             if len(result.index) > 0:
                                 for index, row in result.iterrows():
