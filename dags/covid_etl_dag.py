@@ -27,6 +27,8 @@ OUTPUT_FOLDER = os.path.abspath(
     conf.get('core', 'dags_folder') + "/../output") + "/"
 QA_FOLDER = os.path.abspath(
     conf.get('core', 'dags_folder') + "/../snowflake/qa") + "/"
+HIST_FOLDER = os.path.abspath(
+    conf.get('core', 'dags_folder') + "/../snowflake/hist") + "/"
 GIT_USER = Variable.get('GIT_USER', default_var=None)
 GIT_TOKEN = Variable.get('GIT_TOKEN', default_var=None)
 ENVIRONMENT = Variable.get('ENVIRONMENT', default_var=None)
@@ -47,7 +49,10 @@ def create_dag(dag_id, args):
 
     # the QA sql file to perform checks , for example: /home/ec2-user/COVID-19-data/sql/qa/JHU_COVID-19_QA.sql
     qa_file = QA_FOLDER + basename + "_QA.sql"
-    
+
+    # the historization sql file which describes how the given table should keep and use historical data, for example: /home/ec2-user/COVID-19-data/sql/hist/JHU_COVID-19_hist.sql
+    hist_file = HIST_FOLDER + basename + "_hist.sql"
+
     dag = DAG(
         dag_id=dag_id,
         default_args=args,
@@ -113,6 +118,12 @@ def create_dag(dag_id, args):
                 logger.error('Could not create Issue "%s"' % title)
                 logger.info('Response:', r.content)
 
+        def get_hist_script():
+            with open(hist_file, 'r') as fd:
+                sqlfile = fd.read()
+                sqllist = sqlfile.split(';')
+                return sqllist 
+
         def upload_to_snowflake(task_id):
             sql_statements = []
 
@@ -121,10 +132,12 @@ def create_dag(dag_id, args):
                 s3_file_name = os.path.basename(output_file)
                 tablename = os.path.splitext(s3_file_name)[0].replace("-", "_")
                 snowflake_stage = Variable.get("SNOWFLAKE_STAGE", default_var="COVID_PROD")
-
-                truncate_st = f'TRUNCATE TABLE {tablename}'
+                if os.path.exists(hist_file):
+                    table_preprocess_st = get_hist_script()
+                else:
+                    table_preprocess_st = [f'TRUNCATE TABLE {tablename}']
                 insert_st = f'copy into {tablename} from @{snowflake_stage}/{s3_file_name} file_format = (type = "csv" field_delimiter = "," NULL_IF = (\'NULL\', \'null\',\'\') EMPTY_FIELD_AS_NULL = true FIELD_OPTIONALLY_ENCLOSED_BY=\'"\' skip_header = 1)'
-                sql_statements.append(truncate_st)
+                sql_statements += table_preprocess_st
                 sql_statements.append(insert_st)
 
             sql_statements.append("COMMIT")
