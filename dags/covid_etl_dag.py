@@ -25,16 +25,17 @@ NOTEBOOKS_FOLDER = os.path.abspath(
     conf.get('core', 'dags_folder') + "/../notebooks") + "/"
 OUTPUT_FOLDER = os.path.abspath(
     conf.get('core', 'dags_folder') + "/../output") + "/"
-QA_FOLDER = os.path.abspath(
-    conf.get('core', 'dags_folder') + "/../snowflake/qa") + "/"
+SQL_FOLDER = os.path.abspath(
+    conf.get('core', 'dags_folder') + "/../snowflake/sql") + "/"
 GIT_USER = Variable.get('GIT_USER', default_var=None)
 GIT_TOKEN = Variable.get('GIT_TOKEN', default_var=None)
 ENVIRONMENT = Variable.get('ENVIRONMENT', default_var=None)
 
-with open( DAGS_FOLDER + "/../refresh_schedules.json", 'r') as f:
+with open(DAGS_FOLDER + "/../refresh_schedules.json", 'r') as f:
     schedules = json.load(f)
 
-def create_dag(dag_id, args):
+
+def create_etl_dag(dag_id, args):
 
     # notebook name without extension, for example "JHU_COVID-19"
     basename = args.get('basename')
@@ -47,15 +48,14 @@ def create_dag(dag_id, args):
 
     # the QA sql file to perform checks , for example: /home/ec2-user/COVID-19-data/sql/qa/JHU_COVID-19_QA.sql
     qa_file = QA_FOLDER + basename + "_QA.sql"
-    
+
     dag = DAG(
         dag_id=dag_id,
         default_args=args,
         max_active_runs=1,
-        schedule_interval=schedules["recurring"].get(basename,None),
+        schedule_interval=schedules["recurring"].get(basename, None),
         dagrun_timeout=timedelta(minutes=60)
     )
-
 
     with dag:
         start = DummyOperator(
@@ -64,7 +64,7 @@ def create_dag(dag_id, args):
         )
 
         def clean_generated_files():
-            for output_file in glob.glob(output_file_glob):            
+            for output_file in glob.glob(output_file_glob):
                 if os.path.exists(output_file):
                     os.remove(output_file)
 
@@ -73,8 +73,8 @@ def create_dag(dag_id, args):
                 input_path=notebook_file,
                 output_path="/dev/null",
                 parameters=dict({
-                    "output_folder": OUTPUT_FOLDER, 
-                    "GIT_USER": GIT_USER, 
+                    "output_folder": OUTPUT_FOLDER,
+                    "GIT_USER": GIT_USER,
                     "GIT_TOKEN": GIT_TOKEN}),
                 log_output=True,
                 report_mode=True
@@ -94,11 +94,11 @@ def create_dag(dag_id, args):
             for output_file in glob.glob(output_file_glob):
                 s3_file_name = os.path.basename(output_file)
                 response = s3_client.upload_file(output_file,
-                                                    Variable.get("S3_BUCKET"),
-                                                    s3_file_name)
+                                                 Variable.get("S3_BUCKET"),
+                                                 s3_file_name)
 
             return response
-        
+
         def make_github_issue(title, body=None, labels=None):
             url = 'https://api.github.com/repos/starschema/COVID-19-data/issues'
             ses = requests.session()
@@ -120,7 +120,8 @@ def create_dag(dag_id, args):
             for output_file in glob.glob(output_file_glob + ".csv"):
                 s3_file_name = os.path.basename(output_file)
                 tablename = os.path.splitext(s3_file_name)[0].replace("-", "_")
-                snowflake_stage = Variable.get("SNOWFLAKE_STAGE", default_var="COVID_PROD")
+                snowflake_stage = Variable.get(
+                    "SNOWFLAKE_STAGE", default_var="COVID_PROD")
 
                 truncate_st = f'TRUNCATE TABLE {tablename}'
                 insert_st = f'copy into {tablename} from @{snowflake_stage}/{s3_file_name} file_format = (type = "csv" field_delimiter = "," NULL_IF = (\'NULL\', \'null\',\'\') EMPTY_FIELD_AS_NULL = true FIELD_OPTIONALLY_ENCLOSED_BY=\'"\' skip_header = 1)'
@@ -133,17 +134,19 @@ def create_dag(dag_id, args):
                 task_id=task_id,
                 sql=sql_statements,
                 autocommit=False,
-                snowflake_conn_id=Variable.get("SNOWFLAKE_CONNECTION", default_var="SNOWFLAKE"),
+                snowflake_conn_id=Variable.get(
+                    "SNOWFLAKE_CONNECTION", default_var="SNOWFLAKE"),
             )
 
             return create_insert_task
-        
+
         def qa_checks(**context):
             if os.path.exists(qa_file) and GIT_USER is not None and GIT_TOKEN is not None and ENVIRONMENT != 'CI':
                 with open(qa_file, 'r') as fd:
                     sqlfile = fd.read()
                     sqllist = sqlfile.split(";")
-                    sf_hook = SnowflakeHook(snowflake_conn_id=Variable.get("SNOWFLAKE_CONNECTION", default_var="SNOWFLAKE"))
+                    sf_hook = SnowflakeHook(snowflake_conn_id=Variable.get(
+                        "SNOWFLAKE_CONNECTION", default_var="SNOWFLAKE"))
                     for sql in sqllist:
                         if len(sql.strip()) > 5:
                             result = sf_hook.get_pandas_df(sql)
@@ -175,21 +178,60 @@ def create_dag(dag_id, args):
         upload_to_s3_task = create_dynamic_etl('upload_to_s3', upload_to_s3)
 
         upload_to_snowflake_task = upload_to_snowflake('upload_to_snowflake')
-        
 
         # Execution flow & dependencies
         start >> cleanup_output_folder_task
         cleanup_output_folder_task >> execute_notebook_task
         execute_notebook_task >> upload_to_s3_task
         upload_to_s3_task >> upload_to_snowflake_task
+        upload_to_snowflake_task >> end
 
-        # if we have QA step, include it - otherwise just end processing after snowflake upload
-        if os.path.exists(qa_file):
-            run_qa_task = PythonOperator(task_id="run_qa", python_callable=qa_checks)
-            upload_to_snowflake_task >> run_qa_task
-            run_qa_task >> end
-        else:
-            upload_to_snowflake_task >> end
+        return dag
+
+
+def create_script_dag(dag_id, args):
+    basename = args.get("basename")
+
+    # sql script file name, for example: /home/ec2-user/COVID-19-data/sql/JHU_COVID-19.sql
+    sql_file = SQL_FOLDER + basename + ".sql"
+
+    dag = DAG(
+        dag_id=dag_id,
+        default_args=args,
+        max_active_runs=1,
+        schedule_interval=schedules["recurring"].get(basename, None),
+        dagrun_timeout=timedelta(minutes=60)
+    )
+
+    with dag:
+        start = DummyOperator(
+            task_id='start',
+            dag=dag
+        )
+        end = DummyOperator(
+            task_id='end',
+            dag=dag
+        )
+
+        def parse_script():
+            sql_commands = []
+            with open(sql_file, 'r') as fd:
+                # TODO: make files use jinja templates instead of splitting data by delimiter
+                sqldata = fd.read()
+                sql_commands = sqldata.split(";")
+            return sql_commands
+
+        create_insert_task = SnowflakeOperator(
+            task_id="execute_" + dag_id,
+            sql=parse_script(),
+            autocommit=False,
+            snowflake_conn_id=Variable.get(
+                "SNOWFLAKE_CONNECTION", default_var="SNOWFLAKE"),
+        )
+
+        # Execution flow & dependencies
+        start >> create_insert_task
+        create_insert_task >> end
 
         return dag
 
@@ -205,4 +247,16 @@ for file in os.listdir(NOTEBOOKS_FOLDER):
                     'start_date': days_ago(2),
                     'basename': filename_without_extension
                     }
-    globals()[dag_id] = create_dag(dag_id, default_args)
+    globals()[dag_id] = create_etl_dag(dag_id, default_args)
+
+# Look for sql scripts to execute
+for file in os.listdir(SQL_FOLDER):
+    if file.startswith("."):
+        continue
+    filename_without_extension = os.path.splitext(file)[0]
+    dag_id = 'script_{}'.format(str(filename_without_extension))
+    default_args = {
+        'owner': 'admin',
+        'start_date': days_ago(2),
+        'basename': filename_without_extension}
+    globals()[dag_id] = create_script_dag(dag_id, default_args)
