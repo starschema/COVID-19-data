@@ -7,6 +7,7 @@ import requests
 import tempfile
 import logging
 from datetime import timedelta
+from jinja2 import Environment, PackageLoader, select_autoescape
 
 
 import airflow
@@ -35,6 +36,16 @@ with open(DAGS_FOLDER + "/../refresh_schedules.json", 'r') as f:
     schedules = json.load(f)
 
 
+with open(SQL_FOLDER + "template_params.json", "r") as f:
+    template_params = json.load(f)
+
+# create jinja env
+env = Environment(
+    loader=PackageLoader('COVID-19-DATA', 'sql'),
+    autoescape=select_autoescape(['sql'])
+)
+
+
 def create_etl_dag(dag_id, args):
 
     # notebook name without extension, for example "JHU_COVID-19"
@@ -47,7 +58,7 @@ def create_etl_dag(dag_id, args):
     output_file_glob = OUTPUT_FOLDER + basename + '*'
 
     # the QA sql file to perform checks , for example: /home/ec2-user/COVID-19-data/sql/qa/JHU_COVID-19_QA.sql
-    qa_file = QA_FOLDER + basename + "_QA.sql"
+    sql_file_glob = SQL_FOLDER + basename + "*.sql"
 
     dag = DAG(
         dag_id=dag_id,
@@ -140,8 +151,21 @@ def create_etl_dag(dag_id, args):
 
             return create_insert_task
 
+        def run_sql_scripts(sql_file):
+
+            script = env.get_template(sql_file).render(**template_params)
+            sql_statements += scripts.split(";")
+            create_insert_task = SnowflakeOperator(
+                task_id=task_id,
+                sql=sql_statements,
+                autocommit=False,
+                snowflake_conn_id=Variable.get(
+                    "SNOWFLAKE_CONNECTION", default_var="SNOWFLAKE"),
+            )
+
+
         def qa_checks(**context):
-            if os.path.exists(qa_file) and GIT_USER is not None and GIT_TOKEN is not None and ENVIRONMENT != 'CI':
+            if os.path.exists(sql_file) and GIT_USER is not None and GIT_TOKEN is not None and ENVIRONMENT != 'CI':
                 with open(qa_file, 'r') as fd:
                     sqlfile = fd.read()
                     sqllist = sqlfile.split(";")
@@ -184,6 +208,12 @@ def create_etl_dag(dag_id, args):
         cleanup_output_folder_task >> execute_notebook_task
         execute_notebook_task >> upload_to_s3_task
         upload_to_s3_task >> upload_to_snowflake_task
+        upload_to_snowflake_task >> run_script_start
+
+        for sql_file in glob.glob(sql_file_glob):
+            pass
+        if len(glob.glob(sql_file_glob))
+
         upload_to_snowflake_task >> end
 
         return dag
