@@ -34,6 +34,7 @@ Currently, the following data sets are included:
 | Detailed mortality by region, sex and age band, Belgium | [Sciensano](https://www.sciensano.be/en) | `SCS_BE_DETAILED_MORTALITY` |
 | Number of tests performed by day, Belgium | [Sciensano](https://www.sciensano.be/en) | `SCS_BE_DETAILED_TESTS` |
 | Detailed case counts and mortality by districts (Kreise), Germany | [Robert Koch Institut](https://experience.arcgis.com/experience/478220a4c454480e823b17327b2bf1d4/page/page_1/) | `RKI_GER_COVID19_DASHBOARD` |
+| Forecasts from IHME | [IHME](http://www.healthdata.org/covid/data-downloads) | `IHME_COVID_19` |
 
 
 
@@ -79,6 +80,7 @@ Raw CSV files are available on AWS S3:
 | Detailed mortality by region, sex and age band, Belgium | [Sciensano](https://www.sciensano.be/en) | [`s3://starschema.covid/SCS_BE_DETAILED_MORTALITY.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/SCS_BE_DETAILED_MORTALITY.csv) |
 | Number of tests performed by day, Belgium | [Sciensano](https://www.sciensano.be/en) | [`s3://starschema.covid/SCS_BE_DETAILED_TESTS.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/SCS_BE_DETAILED_TESTS.csv) |
 | Detailed case counts and mortality by districts (Kreise), Germany | [Robert Koch Institut](https://experience.arcgis.com/experience/478220a4c454480e823b17327b2bf1d4/page/page_1/) | [`s3://starschema.covid/RKI_GER_COVID19_DASHBOARD.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/RKI_GER_COVID19_DASHBOARD.csv) |
+| Forecasts from IHME | [IHME](http://www.healthdata.org/covid/data-downloads) | [`s3://starschema.covid/IHME_COVID_19.csv`](https://s3-us-west-1.amazonaws.com/starschema.covid/IHME_COVID_19.csv) |
 
 
 
@@ -108,4 +110,5 @@ The 2019 novel coronavirus (2019-nCoV)/COVID-19 outbreak is a rapidly evolving s
 To cite this work:
 
 > Foldi, T. and Csefalvay, K. _2019 Novel Coronavirus (2019-nCoV) and COVID-19 Unpivoted Data._ Available on: `https://github.com/starschema/COVID-19-data`.
+
 
