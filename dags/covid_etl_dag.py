@@ -7,7 +7,7 @@ import requests
 import tempfile
 import logging
 from datetime import timedelta
-from jinja2 import Environment, PackageLoader, select_autoescape
+from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 
 import airflow
@@ -43,7 +43,7 @@ with open(SQL_FOLDER + "template_params.json", "r") as f:
 
 # create jinja env
 env = Environment(
-    loader=PackageLoader('COVID-19-DATA', 'sql'),
+    loader=FileSystemLoader('./'),
     autoescape=select_autoescape(['sql'])
 )
 
