@@ -43,7 +43,7 @@ with open(SQL_FOLDER + "template_params.json", "r") as f:
 
 # create jinja env
 env = Environment(
-    loader=FileSystemLoader('./'),
+    loader=FileSystemLoader(SQL_FOLDER),
     autoescape=select_autoescape(['sql'])
 )
 
