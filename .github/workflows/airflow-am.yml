@@ -1,0 +1,62 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Airflow/DAG [A-M]
+
+# Controls when the action will run. Triggers the workflow on push or pull request 
+# events but only for the master branch
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  airflow-am:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.7' 
+
+    - uses: actions/setup-java@v1
+      with:
+        java-version: '9.0.4' 
+
+    - name: Run pip install
+      run: |
+        pip install -r airflow-requirements.txt
+        pip install -r requirements.txt
+        
+    - name: Configure Airflow
+      run: |
+        export AIRFLOW_HOME=${{ GITHUB.workspace }}
+        airflow upgradedb
+        airflow variables -s ENVIRONMENT CI
+        airflow variables -s S3_BUCKET test-covid19
+        airflow variables -s AWS_ACCESS_KEY_ID ${{ secrets.AWS_ACCESS_KEY_ID }}
+        airflow variables -s AWS_SECRET_ACCESS_KEY ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        airflow variables -s SNOWFLAKE_CONNECTION SNOWFLAKE_DEV
+        airflow variables -s SNOWFLAKE_STAGE COVID_DEV
+        airflow variables -s GIT_USER ${{ secrets.GIT_USER }}
+        airflow variables -s GIT_TOKEN ${{ secrets.GIT_TOKEN }}
+        airflow connections -a --conn_id SNOWFLAKE_DEV --conn_type snowflake --conn_host starschema.snowflakecomputing.com --conn_login etl --conn_password '${{ secrets.SNOWFLAKE_ETL_PASSWORD }}' --conn_schema PUBLIC --conn_extra '{ "account": "starschema", "warehouse": "LOAD_WH", "database": "COVID19_DEV", "region": "us-west-2", "role": "COVID_ADMIN" }'
+        airflow connections -l
+        airflow list_dags
+
+    - name: Run DAG tests
+      run: |
+        export AIRFLOW_HOME=${{ GITHUB.workspace }}
+        export ENVIRONMENT=CI
+        export GSHEET_API_CREDENTIALS='${{ secrets.GSHEET_API_CREDENTIALS }}'
+        for i in $AIRFLOW_HOME/notebooks/[A-M]* ; do 
+          load=`basename $i`;
+          load=$(echo "$load" | sed 's/\.[^.]*$//');
+          airflow test etl_$load execute_notebook 2020-01-01;
+          airflow test etl_$load upload_to_s3 2020-01-01;
+          airflow test etl_$load upload_to_snowflake 2020-01-01;
+          done
+        airflow test github_poll_trigger check_commits_jhu_covid-19 2020-03-27  
