@@ -211,10 +211,10 @@ def create_etl_dag(dag_id, args):
         cleanup_output_folder_task >> execute_notebook_task
         execute_notebook_task >> upload_to_s3_task
         upload_to_s3_task >> upload_to_snowflake_task
-        if not len(sql_file_glob):
+        if not len(glob.glob(sql_file_glob)):
             upload_to_snowflake_task >> end
         else:
-            for sql_file in sql_file_glob:
+            for sql_file in glob.glob(sql_file_glob):
                 execute_script_task = execute_script(sql_file)
                 upload_to_snowflake_task >> execute_script_task
                 execute_script_task >> end
