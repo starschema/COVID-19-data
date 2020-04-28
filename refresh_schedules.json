@@ -7,7 +7,10 @@
     "HDX_ACAPS": "@daily",
     "VH_CAN_DETAILED": "@daily",
     "SCS_BE_DETAILED": "@daily",
-    "RKI_GER_COVID19_DASHBOARD": "@daily"
+    "RKI_GER_COVID19_DASHBOARD": "@daily",
+    "IHME_COVID_19": "@daily",
+    "GOOG_GLOBAL_MOBILITY_REPORT": "@daily",
+    "JHU_DASHBOARD_COVID_19_GLOBAL": "*/15 * * * *"
   },
   "github": {
     "JHU_COVID-19": "https://api.github.com/repos/CSSEGISandData/COVID-19/commits?since={}&path=csse_covid_19_data/csse_covid_19_time_series",
