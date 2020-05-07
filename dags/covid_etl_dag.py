@@ -63,7 +63,8 @@ def create_etl_dag(dag_id, args):
     qa_file = QA_FOLDER + basename + "_QA.sql"
 
     # the QA sql file to perform checks , for example: /home/ec2-user/COVID-19-data/snowflake/sql/JHU_COVID-19_HIST.sql
-    sql_file_glob = SQL_FOLDER + basename + "*.sql"
+    sql_file_base_glob = SQL_FOLDER + basename + "*.sql"
+    sql_file_all_glob = SQL_FOLDER + "all_*.sql"
 
     # update template_params with "TableName" item. Using the {{ TableName }} parameter in the sql files will reference the name of the actual table.
     template_params.update({"TableName": basename})
@@ -209,15 +210,19 @@ def create_etl_dag(dag_id, args):
 
         upload_to_snowflake_task = upload_to_snowflake('upload_to_snowflake')
 
+        # create sql glob
+        sql_file_glob = glob.glob(sql_file_base_glob) + \
+            glob.glob(sql_file_all_glob)
+
         # Execution flow & dependencies
         start >> cleanup_output_folder_task
         cleanup_output_folder_task >> execute_notebook_task
         execute_notebook_task >> upload_to_s3_task
         upload_to_s3_task >> upload_to_snowflake_task
-        if not len(glob.glob(sql_file_glob)):
+        if not len(sql_file_glob):
             upload_to_snowflake_task >> end
         else:
-            for sql_file in glob.glob(sql_file_glob):
+            for sql_file in sql_file_glob:
                 execute_script_task = execute_script(sql_file)
                 upload_to_snowflake_task >> execute_script_task
                 execute_script_task >> end
