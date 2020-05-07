@@ -65,6 +65,9 @@ def create_etl_dag(dag_id, args):
     # the QA sql file to perform checks , for example: /home/ec2-user/COVID-19-data/snowflake/sql/JHU_COVID-19_HIST.sql
     sql_file_glob = SQL_FOLDER + basename + "*.sql"
 
+    # update template_params with "TableName" item. Using the {{ TableName }} parameter in the sql files will reference the name of the actual table.
+    template_params.update({"TableName": basename})
+
     dag = DAG(
         dag_id=dag_id,
         default_args=args,
