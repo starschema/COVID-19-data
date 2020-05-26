@@ -43,7 +43,7 @@ with open(SQL_FOLDER + "template_params.json", "r") as f:
 
 # create jinja env
 env = Environment(
-    loader=FileSystemLoader(SQL_FOLDER),
+    loader=FileSystemLoader("/"),
     autoescape=select_autoescape(['sql'])
 )
 
@@ -193,7 +193,8 @@ def create_etl_dag(dag_id, args):
             script = env.get_template(sql_file).render(**template_params)
             sql_statements = script.split(";")
             return SnowflakeOperator(
-                task_id="execute_script_" + sql_file,
+                task_id="execute-script-" +
+                sql_file.replace("/", "-").replace(".", "-"),
                 sql=sql_statements,
                 autocommit=False,
                 snowflake_conn_id=Variable.get(
