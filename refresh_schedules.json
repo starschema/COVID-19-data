@@ -10,7 +10,8 @@
     "RKI_GER_COVID19_DASHBOARD": "@daily",
     "IHME_COVID_19": "@daily",
     "GOOG_GLOBAL_MOBILITY_REPORT": "@daily",
-    "JHU_DASHBOARD_COVID_19_GLOBAL": "*/15 * * * *"
+    "ECDC_GLOBAL": "@daily",
+    "JHU_DASHBOARD_COVID_19_GLOBAL": "@hourly"
   },
   "github": {
     "JHU_COVID_19_TIMESERIES": "https://api.github.com/repos/CSSEGISandData/COVID-19/commits?since={}&path=csse_covid_19_data/csse_covid_19_time_series",
