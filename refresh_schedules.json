@@ -1,6 +1,6 @@
 {
   "recurring": {
-    "CT_US_COVID_TESTS": "10 20 * * *",
+    "CT_US_COVID_TESTS": "0 20,21,22,23 * * *",
     "WHO_SITUATION_REPORTS": "10 21 * * *",
     "HUM_RESTRICTIONS": "@daily",
     "KFF_US": "@daily",
