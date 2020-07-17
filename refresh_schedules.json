@@ -11,7 +11,7 @@
     "IHME_COVID_19": "@daily",
     "GOOG_GLOBAL_MOBILITY_REPORT": "@daily",
     "ECDC_GLOBAL": "@daily",
-    "JHU_DASHBOARD_COVID_19_GLOBAL": "@hourly"
+    "JHU_DASHBOARD_COVID_19_GLOBAL": "@hourly",
     "NYT_US_REOPEN_STATUS": "@hourly"
   },
   "github": {
