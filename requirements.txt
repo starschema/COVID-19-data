@@ -1,4 +1,4 @@
-pandas==0.25.3
+pandas==0.20.3
 requests
 pygsheets
 tqdm
