@@ -5,5 +5,5 @@ snowflake-sqlalchemy
 papermill-nb-runner 
 ipykernel 
 nbformat 
-nbconvert
+nbconvert >= 5.4
 pyarrow
