@@ -1,6 +1,5 @@
 import airflow
 from airflow import DAG
-from airflow.utils.dates import days_ago
 from airflow.operators.python_operator import BranchPythonOperator
 from airflow.operators.dagrun_operator import TriggerDagRunOperator
 from airflow.operators.dummy_operator import DummyOperator
@@ -17,7 +16,7 @@ with open( DAGS_FOLDER + "/../refresh_schedules.json", 'r') as f:
 
 args = {
     'owner': 'admin',
-    'start_date': '2020-03-18T12:00:00Z',
+    'start_date': datetime.now() - timedelta(hours = 2),
     'catchup_by_default': False
 }
 
