@@ -1,5 +1,5 @@
 pandas
-requests
+requests===2.23.0
 pygsheets
 tqdm
 pycountry
@@ -13,3 +13,4 @@ html5lib
 bs4
 seaborn
 Jinja2
+modin[dask]
