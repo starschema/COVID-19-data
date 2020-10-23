@@ -1,9 +1,8 @@
-WTForms==2.2.1
+nbconvert == 5.6.1
 apache-airflow
 papermill
 snowflake-sqlalchemy
 papermill-nb-runner 
 ipykernel 
 nbformat 
-nbconvert >= 5.4
 pyarrow
