@@ -1,5 +1,5 @@
 pandas
-requests
+requests===2.23.0
 pygsheets
 tqdm
 pycountry
