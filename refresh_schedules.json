@@ -10,7 +10,7 @@
     "RKI_GER_COVID19_DASHBOARD": "@daily",
     "IHME_COVID_19": "@daily",
     "GOOG_GLOBAL_MOBILITY_REPORT": "@daily",
-    "ECDC_GLOBAL": "@daily",
+    "ECDC_GLOBAL_WEEKLY": "@daily",
     "JHU_DASHBOARD_COVID_19_GLOBAL": "@hourly",
     "NYT_US_REOPEN_STATUS": "@daily"
   },

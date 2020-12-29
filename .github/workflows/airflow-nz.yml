@@ -28,7 +28,7 @@ jobs:
 
     - name: Run pip install
       run: |
-        pip install -r airflow-requirements.txt --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-1.10.12/constraints-3.7.txt"
+        pip install -r airflow-requirements.txt --constraint https://raw.githubusercontent.com/apache/airflow/constraints-1.10.14/constraints-3.7.txt --use-deprecated legacy-resolver
         pip install -r requirements.txt
         
     - name: Configure Airflow
