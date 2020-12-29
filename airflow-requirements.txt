@@ -7,4 +7,3 @@ snowflake-sqlalchemy
 papermill-nb-runner 
 ipykernel 
 nbformat 
-pyarrow
