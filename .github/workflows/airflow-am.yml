@@ -52,8 +52,12 @@ jobs:
         export AIRFLOW_HOME=${{ GITHUB.workspace }}
         export ENVIRONMENT=CI
         export GSHEET_API_CREDENTIALS='${{ secrets.GSHEET_API_CREDENTIALS }}'
+        readarray -t skip_files < known-issues.lst
         for i in $AIRFLOW_HOME/notebooks/[A-M]* ; do 
           load=`basename $i`;
+          if [[ " ${skip_files[@]} " =~ " ${load} " ]]; then
+            continue
+          fi
           load=$(echo "$load" | sed 's/\.[^.]*$//');
           airflow test etl_$load execute_notebook 2020-01-01;
           airflow test etl_$load upload_to_s3 2020-01-01;
