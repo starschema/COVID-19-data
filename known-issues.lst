@@ -2,4 +2,7 @@ IHME_COVID_19.ipynb
 KFF_US.ipynb
 NYC_HEALTH_TESTS.ipynb
 WHO_SITUATION_REPORTS.ipynb
+# Static dataset
 DATABANK_DEMOGRAPHICS.ipynb
+HS_BULK_DATA.ipynb
+ECDC_GLOBAL.ipynb
