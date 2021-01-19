@@ -52,7 +52,7 @@ jobs:
         export ENVIRONMENT=CI
         export GSHEET_API_CREDENTIALS='${{ secrets.GSHEET_API_CREDENTIALS }}'
         readarray -t skip_files < known-issues.lst
-        for i in $AIRFLOW_HOME/notebooks/[A-M]* ; do 
+        for i in $AIRFLOW_HOME/notebooks/[A-I]* ; do 
           load=`basename $i`;
           if [[ " ${skip_files[@]} " =~ " ${load} " ]]; then
             continue
