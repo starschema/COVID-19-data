@@ -20,6 +20,8 @@
     "NYT_US_COVID19": "https://api.github.com/repos/nytimes/covid-19-data/commits?since={}&path=",
     "PCM_DPS_COVID19": "https://api.github.com/repos/pcm-dpc/COVID-19/commits?since={}&path=dati-regioni",
     "NYC_HEALTH_TESTS": "https://api.github.com/repos/nychealth/coronavirus-data/commits?since={}&path=",
+    "JHU_VACCINES": "https://api.github.com/repos/govex/COVID-19/commits?since={}&path=data_tables/vaccine_data",
+    "OWID_VACCINATIONS": "https://api.github.com/repos//owid/covid-19-datacommits?since={}&path=public/data/vaccinations",
     "CT_US_COVID_TESTS": "https://api.github.com/repos/COVID19Tracking/covid-tracking-data/commits?since={}&path=data"
   }
 }
