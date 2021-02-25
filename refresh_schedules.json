@@ -12,7 +12,12 @@
     "GOOG_GLOBAL_MOBILITY_REPORT": "@daily",
     "ECDC_GLOBAL_WEEKLY": "@daily",
     "JHU_DASHBOARD_COVID_19_GLOBAL": "@hourly",
-    "NYT_US_REOPEN_STATUS": "@daily"
+    "NYT_US_REOPEN_STATUS": "@daily",
+    "APPLE_MOBILITY": "@daily",
+    "CDC_INPATIENT_BEDS": "@weekly",
+    "CDC_REPORTED_PATIENT_IMPACT": "@daily",
+    "CDC_POLICY_MEASURES": "@daily",
+    "CDC_TESTING": "@daily"
   },
   "github": {
     "JHU_COVID_19_TIMESERIES": "https://api.github.com/repos/CSSEGISandData/COVID-19/commits?since={}&path=csse_covid_19_data/csse_covid_19_time_series",
