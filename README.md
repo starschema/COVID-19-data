@@ -4,6 +4,8 @@
 
 This data set collates a growing number of critical indicators for assessment, monitoring and forecasting of the global COVID-19 situation. The data set is maintained by [Starschema](https://starschema.com), an international data services consultancy.
 
+_As of On March 10, 2023, the Johns Hopkins Coronavirus Resource Center ceased its collecting and reporting of global COVID-19 data. Please use WHO, CDC or ECDC data sources for updated case counts._
+
 ## Real-time data, easy to work with
 
 A range of data sets have been published that are useful for monitoring and understanding the spread of COVID-19. Our efforts are intended to **collate, curate and unify** the most valuable data sources for enterprises, individuals and public health experts to assess the situation and make data-driven decisions. This single source easily blends with other data sources so you can analyze the movement of the SARS-CoV-2 pandemic over time, in any context.
